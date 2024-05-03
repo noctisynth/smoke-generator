@@ -16,7 +16,6 @@
     "primeicons": "^7.0.0",
     "primevue": "4.0.0-beta.1",
     "vue": "^3.4.26",
-    "vue-puzzle-vcode": "^1.1.10",
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
