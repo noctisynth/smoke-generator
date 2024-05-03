@@ -1,5 +1,7 @@
 import "virtual:uno.css";
 import "primeicons/primeicons.css";
+import "reveal.js/dist/reveal.css";
+import "reveal.js/dist/theme/black.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
