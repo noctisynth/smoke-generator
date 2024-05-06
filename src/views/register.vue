@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
-// @ts-ignore
+// @ts-ignore 忽略 vue-img-cutter 类型错误
 import ImgCutter from 'vue-img-cutter';
 
 const toast = useToast();
@@ -209,6 +209,12 @@ async function register() {
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="flex justify-end">
+                                                <span class="text-12px text-gray-500">已有帐户？<span
+                                                        class="hover:text-blue-500 cursor-pointer"
+                                                        @click="$router.push('/login')">登录</span></span>
+                                            </div>
                                         </div>
 
                                         <div class="flex justify-end mt-2rem">
@@ -227,7 +233,7 @@ async function register() {
                                             </span>
                                         </button>
                                     </template>
-                                    <template #content="{ prevCallback, nextCallback }">
+                                    <template #content="{ prevCallback }">
                                         <div class="flex flex-col gap-4 mx-auto"
                                             style="min-height: 16rem; max-width: 20rem">
                                             <div class="text-center mt-3 mb-3 text-xl font-semibold">设置用户资料</div>
@@ -259,7 +265,7 @@ async function register() {
                                             </div>
                                         </div>
 
-                                        <div class="flex pt-4 justify-between">
+                                        <div class="flex pt-4 justify-between mt-2rem">
                                             <Button label="上一步" severity="secondary" icon="pi pi-arrow-left"
                                                 @click="prevCallback"></Button>
                                             <Button label="注册"
@@ -278,7 +284,7 @@ async function register() {
                                             </span>
                                         </button>
                                     </template>
-                                    <template #content="{ prevCallback }">
+                                    <template #content>
                                         <div class="flex flex-col gap-2 mx-auto"
                                             style="min-height: 16rem; max-width: 24rem">
                                             <div class="text-center mt-3 mb-3 text-xl font-semibold">账户创建成功！
