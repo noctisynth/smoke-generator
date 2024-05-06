@@ -7,6 +7,7 @@ settings:
 dependencies:
   pinia:
     specifier: ^2.1.7
+<<<<<<< Updated upstream
     version: 2.1.7(typescript@5.4.5)(vue@3.4.25)
   primevue:
     specifier: 4.0.0-beta.1
@@ -17,17 +18,49 @@ dependencies:
   vue-router:
     specifier: ^4.3.0
     version: 4.3.2(vue@3.4.25)
+=======
+    version: 2.1.7(typescript@5.4.5)(vue@3.4.26)
+  pinia-plugin-persistedstate:
+    specifier: ^3.2.1
+    version: 3.2.1(pinia@2.1.7)
+  primeicons:
+    specifier: ^7.0.0
+    version: 7.0.0
+  primevue:
+    specifier: 4.0.0-beta.1
+    version: 4.0.0-beta.1(vue@3.4.26)
+  reveal.js:
+    specifier: ^5.1.0
+    version: 5.1.0
+  vue:
+    specifier: ^3.4.26
+    version: 3.4.26(typescript@5.4.5)
+  vue-router:
+    specifier: ^4.3.2
+    version: 4.3.2(vue@3.4.26)
+>>>>>>> Stashed changes
 
 devDependencies:
   '@tsconfig/node20':
     specifier: ^20.1.4
     version: 20.1.4
   '@types/node':
+<<<<<<< Updated upstream
     specifier: ^20.12.5
     version: 20.12.7
   '@vitejs/plugin-vue':
     specifier: ^5.0.4
     version: 5.0.4(vite@5.2.10)(vue@3.4.25)
+=======
+    specifier: ^20.12.8
+    version: 20.12.8
+  '@types/reveal.js':
+    specifier: ^5.0.3
+    version: 5.0.3
+  '@vitejs/plugin-vue':
+    specifier: ^5.0.4
+    version: 5.0.4(vite@5.2.11)(vue@3.4.26)
+>>>>>>> Stashed changes
   '@vue/tsconfig':
     specifier: ^0.5.1
     version: 0.5.1
@@ -35,6 +68,7 @@ devDependencies:
     specifier: ^6.1.2
     version: 6.1.2
   typescript:
+<<<<<<< Updated upstream
     specifier: ~5.4.0
     version: 5.4.5
   unocss:
@@ -49,6 +83,25 @@ devDependencies:
   vue-tsc:
     specifier: ^2.0.11
     version: 2.0.14(typescript@5.4.5)
+=======
+    specifier: ~5.4.5
+    version: 5.4.5
+  unocss:
+    specifier: ^0.59.4
+    version: 0.59.4(postcss@8.4.38)(vite@5.2.11)
+  unplugin-vue-components:
+    specifier: ^0.26.0
+    version: 0.26.0(vue@3.4.26)
+  vite:
+    specifier: ^5.2.11
+    version: 5.2.11(@types/node@20.12.8)
+  vue-img-cutter:
+    specifier: ^3.0.4
+    version: 3.0.4(typescript@5.4.5)
+  vue-tsc:
+    specifier: ^2.0.16
+    version: 2.0.16(typescript@5.4.5)
+>>>>>>> Stashed changes
 
 packages:
 
@@ -606,6 +659,30 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< Updated upstream
+=======
+  /@intlify/core-base@9.13.1:
+    resolution: {integrity: sha512-+bcQRkJO9pcX8d0gel9ZNfrzU22sZFSA0WVhfXrf5jdJOS24a+Bp8pozuS9sBI9Hk/tGz83pgKfmqcn/Ci7/8w==}
+    engines: {node: '>= 16'}
+    dependencies:
+      '@intlify/message-compiler': 9.13.1
+      '@intlify/shared': 9.13.1
+    dev: true
+
+  /@intlify/message-compiler@9.13.1:
+    resolution: {integrity: sha512-SKsVa4ajYGBVm7sHMXd5qX70O2XXjm55zdZB3VeMFCvQyvLew/dLvq3MqnaIsTMF1VkkOb9Ttr6tHcMlyPDL9w==}
+    engines: {node: '>= 16'}
+    dependencies:
+      '@intlify/shared': 9.13.1
+      source-map-js: 1.2.0
+    dev: true
+
+  /@intlify/shared@9.13.1:
+    resolution: {integrity: sha512-u3b6BKGhE6j/JeRU6C/RL2FgyJfy6LakbtfeVF8fJXURpZZTzfh3e05J0bu0XPw447Q6/WUp3C4ajv4TMS4YsQ==}
+    engines: {node: '>= 16'}
+    dev: true
+
+>>>>>>> Stashed changes
   /@jridgewell/gen-mapping@0.3.5:
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
     engines: {node: '>=6.0.0'}
@@ -819,13 +896,26 @@ packages:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
 
+<<<<<<< Updated upstream
   /@types/node@20.12.7:
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
+=======
+  /@types/node@20.12.8:
+    resolution: {integrity: sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==}
+>>>>>>> Stashed changes
     dependencies:
       undici-types: 5.26.5
     dev: true
 
+<<<<<<< Updated upstream
   /@unocss/astro@0.59.4(vite@5.2.10):
+=======
+  /@types/reveal.js@5.0.3:
+    resolution: {integrity: sha512-gwnK8TR38IOBIORWFrV5/z9lRX4iLke2FBqNgRhXxehaWJFkrzVY2TVzfdX/SX94eugt+OI5l++zDBBSfdzruQ==}
+    dev: true
+
+  /@unocss/astro@0.59.4(vite@5.2.11):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-DU3OR5MMR1Uvvec4/wB9EetDASHRg19Moy6z/MiIhn8JWJ0QzWYgSeJcfUX8exomMYv6WUEQJL+CyLI34Wmn8w==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0
@@ -835,8 +925,13 @@ packages:
     dependencies:
       '@unocss/core': 0.59.4
       '@unocss/reset': 0.59.4
+<<<<<<< Updated upstream
       '@unocss/vite': 0.59.4(vite@5.2.10)
       vite: 5.2.10(@types/node@20.12.7)
+=======
+      '@unocss/vite': 0.59.4(vite@5.2.11)
+      vite: 5.2.11(@types/node@20.12.8)
+>>>>>>> Stashed changes
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -1019,7 +1114,11 @@ packages:
       '@unocss/core': 0.59.4
     dev: true
 
+<<<<<<< Updated upstream
   /@unocss/vite@0.59.4(vite@5.2.10):
+=======
+  /@unocss/vite@0.59.4(vite@5.2.11):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-q7GN7vkQYn79n7vYIUlaa7gXGwc7pk0Qo3z3ZFwWGE43/DtZnn2Hwl5UjgBAgi9McA+xqHJEHRsJnI7HJPHUYA==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0 || ^4.0.0 || ^5.0.0-0
@@ -1034,18 +1133,27 @@ packages:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       magic-string: 0.30.10
+<<<<<<< Updated upstream
       vite: 5.2.10(@types/node@20.12.7)
+=======
+      vite: 5.2.11(@types/node@20.12.8)
+>>>>>>> Stashed changes
     transitivePeerDependencies:
       - rollup
     dev: true
 
+<<<<<<< Updated upstream
   /@vitejs/plugin-vue@5.0.4(vite@5.2.10)(vue@3.4.25):
+=======
+  /@vitejs/plugin-vue@5.0.4(vite@5.2.11)(vue@3.4.26):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-WS3hevEszI6CEVEx28F8RjTX97k3KsrcY6kvTg7+Whm5y3oYvcqzVeGCU3hxSAn4uY2CLCkeokkGKpoctccilQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
+<<<<<<< Updated upstream
       vite: 5.2.10(@types/node@20.12.7)
       vue: 3.4.25(typescript@5.4.5)
     dev: true
@@ -1058,14 +1166,35 @@ packages:
 
   /@volar/source-map@2.2.0-alpha.10:
     resolution: {integrity: sha512-nrdWApVkP5cksAnDEyy1JD9rKdwOJsEq1B+seWO4vNXmZNcxQQCx4DULLBvKt7AzRUAQiAuw5aQkb9RBaSqdVA==}
+=======
+      vite: 5.2.11(@types/node@20.12.8)
+      vue: 3.4.26(typescript@5.4.5)
+    dev: true
+
+  /@volar/language-core@2.2.0:
+    resolution: {integrity: sha512-a8WG9+4OdeNDW4ywABZIM6S6UN7em8uIlM/BZ2pWQUYrVmX+m8sj/X+QadvO+Li/t/LjAqbWJQtVgxdpEWLALQ==}
+    dependencies:
+      '@volar/source-map': 2.2.0
+    dev: true
+
+  /@volar/source-map@2.2.0:
+    resolution: {integrity: sha512-HQlPRlHOVqCCHK8wI76ZldHkEwKsjp7E6idUc36Ekni+KJDNrqgSqPvyHQixybXPHNU7CI9Uxd9/IkxO7LuNBw==}
+>>>>>>> Stashed changes
     dependencies:
       muggle-string: 0.4.1
     dev: true
 
+<<<<<<< Updated upstream
   /@volar/typescript@2.2.0-alpha.10:
     resolution: {integrity: sha512-GCa0vTVVdA9ULUsu2Rx7jwsIuyZQPvPVT9o3NrANTbYv+523Ao1gv3glC5vzNSDPM6bUl37r94HbCj7KINQr+g==}
     dependencies:
       '@volar/language-core': 2.2.0-alpha.10
+=======
+  /@volar/typescript@2.2.0:
+    resolution: {integrity: sha512-wC6l4zLiiCLxF+FGaHCbWlQYf4vMsnRxYhcI6WgvaNppOD6r1g+Ef1RKRJUApALWU46Yy/JDU/TbdV6w/X6Liw==}
+    dependencies:
+      '@volar/language-core': 2.2.0
+>>>>>>> Stashed changes
       path-browserify: 1.0.1
     dev: true
 
@@ -1077,12 +1206,26 @@ packages:
       entities: 4.5.0
       estree-walker: 2.0.2
       source-map-js: 1.2.0
+<<<<<<< Updated upstream
+=======
+    dev: true
+
+  /@vue/compiler-core@3.4.26:
+    resolution: {integrity: sha512-N9Vil6Hvw7NaiyFUFBPXrAyETIGlQ8KcFMkyk6hW1Cl6NvoqvP+Y8p1Eqvx+UdqsnrnI9+HMUEJegzia3mhXmQ==}
+    dependencies:
+      '@babel/parser': 7.24.4
+      '@vue/shared': 3.4.26
+      entities: 4.5.0
+      estree-walker: 2.0.2
+      source-map-js: 1.2.0
+>>>>>>> Stashed changes
 
   /@vue/compiler-dom@3.4.25:
     resolution: {integrity: sha512-Ugz5DusW57+HjllAugLci19NsDK+VyjGvmbB2TXaTcSlQxwL++2PETHx/+Qv6qFwNLzSt7HKepPe4DcTE3pBWg==}
     dependencies:
       '@vue/compiler-core': 3.4.25
       '@vue/shared': 3.4.25
+<<<<<<< Updated upstream
 
   /@vue/compiler-sfc@3.4.25:
     resolution: {integrity: sha512-m7rryuqzIoQpOBZ18wKyq05IwL6qEpZxFZfRxlNYuIPDqywrXQxgUwLXIvoU72gs6cRdY6wHD0WVZIFE4OEaAQ==}
@@ -1092,30 +1235,65 @@ packages:
       '@vue/compiler-dom': 3.4.25
       '@vue/compiler-ssr': 3.4.25
       '@vue/shared': 3.4.25
+=======
+    dev: true
+
+  /@vue/compiler-dom@3.4.26:
+    resolution: {integrity: sha512-4CWbR5vR9fMg23YqFOhr6t6WB1Fjt62d6xdFPyj8pxrYub7d+OgZaObMsoxaF9yBUHPMiPFK303v61PwAuGvZA==}
+    dependencies:
+      '@vue/compiler-core': 3.4.26
+      '@vue/shared': 3.4.26
+
+  /@vue/compiler-sfc@3.4.26:
+    resolution: {integrity: sha512-It1dp+FAOCgluYSVYlDn5DtZBxk1NCiJJfu2mlQqa/b+k8GL6NG/3/zRbJnHdhV2VhxFghaDq5L4K+1dakW6cw==}
+    dependencies:
+      '@babel/parser': 7.24.4
+      '@vue/compiler-core': 3.4.26
+      '@vue/compiler-dom': 3.4.26
+      '@vue/compiler-ssr': 3.4.26
+      '@vue/shared': 3.4.26
+>>>>>>> Stashed changes
       estree-walker: 2.0.2
       magic-string: 0.30.10
       postcss: 8.4.38
       source-map-js: 1.2.0
 
+<<<<<<< Updated upstream
   /@vue/compiler-ssr@3.4.25:
     resolution: {integrity: sha512-H2ohvM/Pf6LelGxDBnfbbXFPyM4NE3hrw0e/EpwuSiYu8c819wx+SVGdJ65p/sFrYDd6OnSDxN1MB2mN07hRSQ==}
     dependencies:
       '@vue/compiler-dom': 3.4.25
       '@vue/shared': 3.4.25
+=======
+  /@vue/compiler-ssr@3.4.26:
+    resolution: {integrity: sha512-FNwLfk7LlEPRY/g+nw2VqiDKcnDTVdCfBREekF8X74cPLiWHUX6oldktf/Vx28yh4STNy7t+/yuLoMBBF7YDiQ==}
+    dependencies:
+      '@vue/compiler-dom': 3.4.26
+      '@vue/shared': 3.4.26
+>>>>>>> Stashed changes
 
   /@vue/devtools-api@6.6.1:
     resolution: {integrity: sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==}
     dev: false
 
+<<<<<<< Updated upstream
   /@vue/language-core@2.0.14(typescript@5.4.5):
     resolution: {integrity: sha512-3q8mHSNcGTR7sfp2X6jZdcb4yt8AjBXAfKk0qkZIh7GAJxOnoZ10h5HToZglw4ToFvAnq+xu/Z2FFbglh9Icag==}
+=======
+  /@vue/language-core@2.0.16(typescript@5.4.5):
+    resolution: {integrity: sha512-Bc2sexRH99pznOph8mLw2BlRZ9edm7tW51kcBXgx8adAoOcZUWJj3UNSsdQ6H9Y8meGz7BoazVrVo/jUukIsPw==}
+>>>>>>> Stashed changes
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
+<<<<<<< Updated upstream
       '@volar/language-core': 2.2.0-alpha.10
+=======
+      '@volar/language-core': 2.2.0
+>>>>>>> Stashed changes
       '@vue/compiler-dom': 3.4.25
       '@vue/shared': 3.4.25
       computeds: 0.0.1
@@ -1125,6 +1303,7 @@ packages:
       vue-template-compiler: 2.7.16
     dev: true
 
+<<<<<<< Updated upstream
   /@vue/reactivity@3.4.25:
     resolution: {integrity: sha512-mKbEtKr1iTxZkAG3vm3BtKHAOhuI4zzsVcN0epDldU/THsrvfXRKzq+lZnjczZGnTdh3ojd86/WrP+u9M51pWQ==}
     dependencies:
@@ -1154,6 +1333,41 @@ packages:
 
   /@vue/shared@3.4.25:
     resolution: {integrity: sha512-k0yappJ77g2+KNrIaF0FFnzwLvUBLUYr8VOwz+/6vLsmItFp51AcxLL7Ey3iPd7BIRyWPOcqUjMnm7OkahXllA==}
+=======
+  /@vue/reactivity@3.4.26:
+    resolution: {integrity: sha512-E/ynEAu/pw0yotJeLdvZEsp5Olmxt+9/WqzvKff0gE67tw73gmbx6tRkiagE/eH0UCubzSlGRebCbidB1CpqZQ==}
+    dependencies:
+      '@vue/shared': 3.4.26
+
+  /@vue/runtime-core@3.4.26:
+    resolution: {integrity: sha512-AFJDLpZvhT4ujUgZSIL9pdNcO23qVFh7zWCsNdGQBw8ecLNxOOnPcK9wTTIYCmBJnuPHpukOwo62a2PPivihqw==}
+    dependencies:
+      '@vue/reactivity': 3.4.26
+      '@vue/shared': 3.4.26
+
+  /@vue/runtime-dom@3.4.26:
+    resolution: {integrity: sha512-UftYA2hUXR2UOZD/Fc3IndZuCOOJgFxJsWOxDkhfVcwLbsfh2CdXE2tG4jWxBZuDAs9J9PzRTUFt1PgydEtItw==}
+    dependencies:
+      '@vue/runtime-core': 3.4.26
+      '@vue/shared': 3.4.26
+      csstype: 3.1.3
+
+  /@vue/server-renderer@3.4.26(vue@3.4.26):
+    resolution: {integrity: sha512-xoGAqSjYDPGAeRWxeoYwqJFD/gw7mpgzOvSxEmjWaFO2rE6qpbD1PC172YRpvKhrihkyHJkNDADFXTfCyVGhKw==}
+    peerDependencies:
+      vue: 3.4.26
+    dependencies:
+      '@vue/compiler-ssr': 3.4.26
+      '@vue/shared': 3.4.26
+      vue: 3.4.26(typescript@5.4.5)
+
+  /@vue/shared@3.4.25:
+    resolution: {integrity: sha512-k0yappJ77g2+KNrIaF0FFnzwLvUBLUYr8VOwz+/6vLsmItFp51AcxLL7Ey3iPd7BIRyWPOcqUjMnm7OkahXllA==}
+    dev: true
+
+  /@vue/shared@3.4.26:
+    resolution: {integrity: sha512-Fg4zwR0GNnjzodMt3KRy2AWGMKQXByl56+4HjN87soxLNU9P5xcJkstAlIeEF3cU6UYOzmJl1tV0dVPGIljCnQ==}
+>>>>>>> Stashed changes
 
   /@vue/tsconfig@0.5.1:
     resolution: {integrity: sha512-VcZK7MvpjuTPx2w6blwnwZAu5/LgBUtejFOi3pPGQFXQN5Ela03FUtd2Qtg4yWGGissVL0dr6Ro1LfOFh+PCuQ==}
@@ -1282,6 +1496,14 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
+<<<<<<< Updated upstream
+=======
+  /core-js@3.37.0:
+    resolution: {integrity: sha512-fu5vHevQ8ZG4og+LXug8ulUtVxjOcEYvifJr7L5Bfq9GOztVqsKd9/59hUk2ZSbCrS3BqUr3EpaYGIYzq7g3Ug==}
+    requiresBuild: true
+    dev: true
+
+>>>>>>> Stashed changes
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
@@ -1772,7 +1994,19 @@ packages:
     hasBin: true
     dev: true
 
+<<<<<<< Updated upstream
   /pinia@2.1.7(typescript@5.4.5)(vue@3.4.25):
+=======
+  /pinia-plugin-persistedstate@3.2.1(pinia@2.1.7):
+    resolution: {integrity: sha512-MK++8LRUsGF7r45PjBFES82ISnPzyO6IZx3CH5vyPseFLZCk1g2kgx6l/nW8pEBKxxd4do0P6bJw+mUSZIEZUQ==}
+    peerDependencies:
+      pinia: ^2.0.0
+    dependencies:
+      pinia: 2.1.7(typescript@5.4.5)(vue@3.4.26)
+    dev: false
+
+  /pinia@2.1.7(typescript@5.4.5)(vue@3.4.26):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
@@ -1786,8 +2020,13 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.6.1
       typescript: 5.4.5
+<<<<<<< Updated upstream
       vue: 3.4.25(typescript@5.4.5)
       vue-demi: 0.14.7(vue@3.4.25)
+=======
+      vue: 3.4.26(typescript@5.4.5)
+      vue-demi: 0.14.7(vue@3.4.26)
+>>>>>>> Stashed changes
     dev: false
 
   /pkg-types@1.1.0:
@@ -1806,12 +2045,24 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.2.0
 
+<<<<<<< Updated upstream
   /primevue@4.0.0-beta.1(vue@3.4.25):
+=======
+  /primeicons@7.0.0:
+    resolution: {integrity: sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==}
+    dev: false
+
+  /primevue@4.0.0-beta.1(vue@3.4.26):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-NGVPAODdoj58p0kKUhnb35cmFOtPzU3Zr4mxzEMNV0j+TYrhKlAqSUaIlT/KyMWvJ/7yQEtXoepprvX9OaW4Mg==}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
+<<<<<<< Updated upstream
       vue: 3.4.25(typescript@5.4.5)
+=======
+      vue: 3.4.26(typescript@5.4.5)
+>>>>>>> Stashed changes
     dev: false
 
   /queue-microtask@1.2.3:
@@ -1847,6 +2098,14 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: true
 
+<<<<<<< Updated upstream
+=======
+  /reveal.js@5.1.0:
+    resolution: {integrity: sha512-KDt7m0+xwKV6nAZt4CNPVFBf42sTKRQapg0bGGKB5PKO5XvChnMfwlZkybydHiQJ7p5+6LbHKRGrhXODdoNIaA==}
+    engines: {node: '>=18.0.0'}
+    dev: false
+
+>>>>>>> Stashed changes
   /rollup@4.17.0:
     resolution: {integrity: sha512-wZJSn0WMtWrxhYKQRt5Z6GIXlziOoMDFmbHmRfL3v+sBTAshx2DBq1AfMArB7eIjF63r4ocn2ZTAyUptg/7kmQ==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -1979,7 +2238,11 @@ packages:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
+<<<<<<< Updated upstream
   /unocss@0.59.4(postcss@8.4.38)(vite@5.2.10):
+=======
+  /unocss@0.59.4(postcss@8.4.38)(vite@5.2.11):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-QmCVjRObvVu/gsGrJGVt0NnrdhFFn314BUZn2WQyXV9rIvHLRmG5bIu0j5vibJkj7ZhFchTrnTM1pTFXP1xt5g==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -1991,7 +2254,11 @@ packages:
       vite:
         optional: true
     dependencies:
+<<<<<<< Updated upstream
       '@unocss/astro': 0.59.4(vite@5.2.10)
+=======
+      '@unocss/astro': 0.59.4(vite@5.2.11)
+>>>>>>> Stashed changes
       '@unocss/cli': 0.59.4
       '@unocss/core': 0.59.4
       '@unocss/extractor-arbitrary-variants': 0.59.4
@@ -2010,15 +2277,24 @@ packages:
       '@unocss/transformer-compile-class': 0.59.4
       '@unocss/transformer-directives': 0.59.4
       '@unocss/transformer-variant-group': 0.59.4
+<<<<<<< Updated upstream
       '@unocss/vite': 0.59.4(vite@5.2.10)
       vite: 5.2.10(@types/node@20.12.7)
+=======
+      '@unocss/vite': 0.59.4(vite@5.2.11)
+      vite: 5.2.11(@types/node@20.12.8)
+>>>>>>> Stashed changes
     transitivePeerDependencies:
       - postcss
       - rollup
       - supports-color
     dev: true
 
+<<<<<<< Updated upstream
   /unplugin-vue-components@0.26.0(vue@3.4.25):
+=======
+  /unplugin-vue-components@0.26.0(vue@3.4.26):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-s7IdPDlnOvPamjunVxw8kNgKNK8A5KM1YpK5j/p97jEKTjlPNrA0nZBiSfAKKlK1gWZuyWXlKL5dk3EDw874LQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2041,7 +2317,11 @@ packages:
       minimatch: 9.0.4
       resolve: 1.22.8
       unplugin: 1.10.1
+<<<<<<< Updated upstream
       vue: 3.4.25(typescript@5.4.5)
+=======
+      vue: 3.4.26(typescript@5.4.5)
+>>>>>>> Stashed changes
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -2068,8 +2348,13 @@ packages:
       picocolors: 1.0.0
     dev: true
 
+<<<<<<< Updated upstream
   /vite@5.2.10(@types/node@20.12.7):
     resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
+=======
+  /vite@5.2.11(@types/node@20.12.8):
+    resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
+>>>>>>> Stashed changes
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -2096,7 +2381,11 @@ packages:
       terser:
         optional: true
     dependencies:
+<<<<<<< Updated upstream
       '@types/node': 20.12.7
+=======
+      '@types/node': 20.12.8
+>>>>>>> Stashed changes
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.17.0
@@ -2104,7 +2393,11 @@ packages:
       fsevents: 2.3.3
     dev: true
 
+<<<<<<< Updated upstream
   /vue-demi@0.14.7(vue@3.4.25):
+=======
+  /vue-demi@0.14.7(vue@3.4.26):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
     engines: {node: '>=12'}
     hasBin: true
@@ -2116,16 +2409,49 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
+<<<<<<< Updated upstream
       vue: 3.4.25(typescript@5.4.5)
     dev: false
 
   /vue-router@4.3.2(vue@3.4.25):
+=======
+      vue: 3.4.26(typescript@5.4.5)
+    dev: false
+
+  /vue-i18n@9.13.1(vue@3.4.26):
+    resolution: {integrity: sha512-mh0GIxx0wPtPlcB1q4k277y0iKgo25xmDPWioVVYanjPufDBpvu5ySTjP5wOrSvlYQ2m1xI+CFhGdauv/61uQg==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@intlify/core-base': 9.13.1
+      '@intlify/shared': 9.13.1
+      '@vue/devtools-api': 6.6.1
+      vue: 3.4.26(typescript@5.4.5)
+    dev: true
+
+  /vue-img-cutter@3.0.4(typescript@5.4.5):
+    resolution: {integrity: sha512-z+PR5tie4Q+D7Is5k0+BCrIAK2P9zOOuFGL7R7PxCSS+d/wDsRgetfzYna3QwMU+ZVxb3NKgVluFeJEUtCaMPw==}
+    dependencies:
+      core-js: 3.37.0
+      vue: 3.4.26(typescript@5.4.5)
+      vue-i18n: 9.13.1(vue@3.4.26)
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
+  /vue-router@4.3.2(vue@3.4.26):
+>>>>>>> Stashed changes
     resolution: {integrity: sha512-hKQJ1vDAZ5LVkKEnHhmm1f9pMiWIBNGF5AwU67PdH7TyXCj/a4hTccuUuYCAMgJK6rO/NVYtQIEN3yL8CECa7Q==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.6.1
+<<<<<<< Updated upstream
       vue: 3.4.25(typescript@5.4.5)
+=======
+      vue: 3.4.26(typescript@5.4.5)
+>>>>>>> Stashed changes
     dev: false
 
   /vue-template-compiler@2.7.16:
@@ -2135,31 +2461,54 @@ packages:
       he: 1.2.0
     dev: true
 
+<<<<<<< Updated upstream
   /vue-tsc@2.0.14(typescript@5.4.5):
     resolution: {integrity: sha512-DgAO3U1cnCHOUO7yB35LENbkapeRsBZ7Ugq5hGz/QOHny0+1VQN8eSwSBjYbjLVPfvfw6EY7sNPjbuHHUhckcg==}
+=======
+  /vue-tsc@2.0.16(typescript@5.4.5):
+    resolution: {integrity: sha512-/gHAWJa216PeEhfxtAToIbxdWgw01wuQzo48ZUqMYVEyNqDp+OYV9xMO5HaPS2P3Ls0+EsjguMZLY4cGobX4Ew==}
+>>>>>>> Stashed changes
     hasBin: true
     peerDependencies:
       typescript: '*'
     dependencies:
+<<<<<<< Updated upstream
       '@volar/typescript': 2.2.0-alpha.10
       '@vue/language-core': 2.0.14(typescript@5.4.5)
+=======
+      '@volar/typescript': 2.2.0
+      '@vue/language-core': 2.0.16(typescript@5.4.5)
+>>>>>>> Stashed changes
       semver: 7.6.0
       typescript: 5.4.5
     dev: true
 
+<<<<<<< Updated upstream
   /vue@3.4.25(typescript@5.4.5):
     resolution: {integrity: sha512-HWyDqoBHMgav/OKiYA2ZQg+kjfMgLt/T0vg4cbIF7JbXAjDexRf5JRg+PWAfrAkSmTd2I8aPSXtooBFWHB98cg==}
+=======
+  /vue@3.4.26(typescript@5.4.5):
+    resolution: {integrity: sha512-bUIq/p+VB+0xrJubaemrfhk1/FiW9iX+pDV+62I/XJ6EkspAO9/DXEjbDFoe8pIfOZBqfk45i9BMc41ptP/uRg==}
+>>>>>>> Stashed changes
     peerDependencies:
       typescript: '*'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
+<<<<<<< Updated upstream
       '@vue/compiler-dom': 3.4.25
       '@vue/compiler-sfc': 3.4.25
       '@vue/runtime-dom': 3.4.25
       '@vue/server-renderer': 3.4.25(vue@3.4.25)
       '@vue/shared': 3.4.25
+=======
+      '@vue/compiler-dom': 3.4.26
+      '@vue/compiler-sfc': 3.4.26
+      '@vue/runtime-dom': 3.4.26
+      '@vue/server-renderer': 3.4.26(vue@3.4.26)
+      '@vue/shared': 3.4.26
+>>>>>>> Stashed changes
       typescript: 5.4.5
 
   /webpack-sources@3.2.3:

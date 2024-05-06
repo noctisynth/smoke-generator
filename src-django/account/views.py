@@ -10,18 +10,20 @@ def add(request: HttpRequest):
         "username"  :"bash",
         "password"  :"bash123",
         "phone"     :"12345677890",
-        "email"     :"123@asd.com"
+        "email"     :"123@asd.com",
+        "status":"企业",
     }
     """
 
     data = selectData(request)
 
-    username: str = data.get("username")
-    password: str = data.get("password")
-    phone: str = data.get("phone")
-    email: str = data.get("email")
+    username: str = data.get("username", "")
+    password: str = data.get("password", "")
+    phone: str = data.get("phone", "")
+    email: str = data.get("email", "")
+    stauts: str = data.get("status", "")
 
-    if not all([username, password, phone, email]):
+    if not all([username, password, phone, email, stauts]):
         return JsonResponse({"status": 402, "message": "参数错误"})
 
     if UserAccount.objects.filter(username=username).exists():
@@ -32,6 +34,7 @@ def add(request: HttpRequest):
     ua.password = password
     ua.phone = phone
     ua.email = email
+    ua.status = stauts
     ua.save()
 
     return JsonResponse({"status": 200, "message": "用户创建成功"})
@@ -49,14 +52,14 @@ def login(request: HttpRequest):
     """
     data = selectData(request)
 
-    token: str = data.get("token")
+    token: str = data.get("token", "")
     ua = verifyToken(token)
 
     if ua:
         return JsonResponse({"status": 201, "message": "用户已登陆"})
 
-    username: str = data.get("username")
-    password: str = data.get("password")
+    username: str = data.get("username", "")
+    password: str = data.get("password", "")
 
     if not all([username, password]):
         return JsonResponse({"status": 402, "message": "参数错误"})
@@ -80,7 +83,7 @@ def login(request: HttpRequest):
 
 def logout(request: HttpRequest):
     data = selectData(request)
-    token = data.get("token")
+    token = data.get("token", "")
     ua = verifyToken(token)
 
     if ua:
@@ -97,7 +100,7 @@ def profile(request: HttpRequest):
     }
     """
     data = selectData(request)
-    token: str = data.get("token")
+    token: str = data.get("token", "")
     ua = verifyToken(token)
 
     if not ua:
@@ -126,16 +129,16 @@ def update(request: HttpRequest):
     """
     data = selectData(request)
 
-    token: str = data.get("token")
+    token: str = data.get("token", "")
     ua = verifyToken(token)
 
     if not ua:
         return JsonResponse({"status": 403, "message": "用户未登录"})
 
-    password: str = data.get("password")
-    phone: str = data.get("phone")
-    email: str = data.get("email")
-    status: str = data.get("status")
+    password: str = data.get("password", "")
+    phone: str = data.get("phone", "")
+    email: str = data.get("email", "")
+    status: str = data.get("status", "")
     avatar = request.FILES.get("avatar")
 
     if password:
@@ -147,7 +150,8 @@ def update(request: HttpRequest):
     if status:
         ua.status = status
     if avatar:
-        ua.avatar = avatar
+        ua.avatar = avatar  # type: ignore # e ?
 
     ua.save()
+
     return JsonResponse({"status": 200})
