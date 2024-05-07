@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 import datetime
 
@@ -10,5 +11,8 @@ class Announcement(models.Model):
     date = models.DateField(verbose_name="日期", default=datetime.date.today)
 
     class Meta:
+        verbose_name = "公告"
+        verbose_name_plural = "公告"
+
         def __str__(self) -> str:
             return self.title  # type: ignore
