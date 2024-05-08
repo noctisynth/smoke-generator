@@ -6,24 +6,19 @@ from util import selectData, verifyToken
 
 def add(request: HttpRequest):
     """
-    {
-        "username"  :"bash",
-        "password"  :"bash123",
-        "phone"     :"12345677890",
-        "email"     :"123@asd.com",
-        "status":"企业",
-    }
+    采用form表单
     """
+    if request.method != "POST":
+        return JsonResponse({"status": 405, "message": "请使用POST调用接口"})
 
-    data = selectData(request)
+    username: str = request.POST.get("username", "")
+    password: str = request.POST.get("password", "")
+    phone: str = request.POST.get("phone", "")
+    email: str = request.POST.get("email", "")
+    stauts: str = request.POST.get("status", "")
+    avatar = request.FILES.get("avatar", None)
 
-    username: str = data.get("username", "")
-    password: str = data.get("password", "")
-    phone: str = data.get("phone", "")
-    email: str = data.get("email", "")
-    stauts: str = data.get("status", "")
-
-    if not all([username, password, phone, email, stauts]):
+    if not all([username, password, phone, email, stauts, avatar]):
         return JsonResponse({"status": 402, "message": "参数错误"})
 
     if UserAccount.objects.filter(username=username).exists():
@@ -35,6 +30,8 @@ def add(request: HttpRequest):
     ua.phone = phone
     ua.email = email
     ua.status = stauts
+
+    ua.avatar = avatar  # type: ignore
     ua.save()
 
     return JsonResponse({"status": 200, "message": "用户创建成功"})
