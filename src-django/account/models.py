@@ -26,6 +26,13 @@ class UserAccount(models.Model):
         upload_to="avatar", verbose_name="头像", default="123.jpg", null=True
     )
 
+    class Meta:
+        verbose_name = "用户"
+        verbose_name_plural = "用户"
+
+        def __str__(self) -> str:
+            return self.username  # type: ignore
+
 
 class UserToken(models.Model):
     token = models.CharField(

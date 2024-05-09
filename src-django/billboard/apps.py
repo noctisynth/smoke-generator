@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class AccountConfig(AppConfig):
+class BillboardConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "account"
-    verbose_name = "用户管理"
+    name = "billboard"
+    verbose_name = "公告牌"

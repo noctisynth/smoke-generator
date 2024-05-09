@@ -7,12 +7,10 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
     Card: typeof import('primevue/card')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
     ColoredCard: typeof import('./src/components/ColoredCard.vue')['default']
-    ColorfulCard: typeof import('./src/components/ColorfulCard.vue')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
     Image: typeof import('primevue/image')['default']
     InputText: typeof import('primevue/inputtext')['default']
