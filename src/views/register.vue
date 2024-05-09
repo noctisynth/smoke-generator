@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 // @ts-ignore 忽略 vue-img-cutter 类型错误
 import ImgCutter from 'vue-img-cutter';
+import axios from '@/axios/';
 
 const toast = useToast();
 
@@ -18,7 +19,7 @@ const confirmPassword = ref('');
 // 用户资料
 const phone = ref('');
 const type = ref('');
-const avatar = ref<Blob | null>(null);
+const avatar = ref<File | null>(null);
 const avatarUrl = ref('');
 const typeOptions = ['企业', '个人']
 
@@ -62,6 +63,7 @@ async function validate() {
 // 剪切并上传头像
 function cutDown(value: { index: null; fileName: string; file: File; blob: Blob, dataURL: string }) {
     avatarUrl.value = value.dataURL;
+    avatar.value = value.file;
 }
 
 // 注册
@@ -82,11 +84,22 @@ async function register() {
 
     // 注册
     inProgress.value = true;
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    inProgress.value = false;
-
-    // 注册成功，切换到成功页面
-    active.value = 2;
+    await axios.post('/account/add', {
+        username: username.value,
+        email: email.value,
+        password: password.value,
+        phone: phone.value,
+        type: type.value,
+        avatar: avatar.value
+    }).then(() => {
+        // 注册成功，切换到成功页面
+        toast.add({ severity: 'success', summary: '成功', detail: '注册成功！', life: 3000 });
+        active.value = 2;
+    }).catch((error: any) => {
+        toast.add({ severity: 'error', summary: '错误', detail: error, life: 3000 });
+    }).finally(() => {
+        inProgress.value = false;
+    });
 }
 </script>
 
