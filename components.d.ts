@@ -20,6 +20,9 @@ declare module 'vue' {
     ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SidePanel: typeof import('./src/components/SidePanel.vue')['default']
+    SplitButton: typeof import('primevue/splitbutton')['default']
     Toolbar: typeof import('primevue/toolbar')['default']
+    TopBar: typeof import('./src/components/TopBar.vue')['default']
   }
 }
