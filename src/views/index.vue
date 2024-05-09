@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import Reveal from 'reveal.js';
 import { onMounted } from 'vue';
+
+// 局部导入 Reveal.js 样式
 import "reveal.js/dist/reveal.css";
 import "reveal.js/dist/theme/black.css";
 
+// 页面跳转
+function direct(to: string) {
+    window.location.href = "/#" + to;
+    window.location.reload(); // 确保 Reveal.js 在新页面中被销毁
+}
+
 onMounted(() => {
+    // 初始化 Reveal.js
     Reveal.initialize({
+        // 设置 Reveal.js 为垂直滚动模式
         view: 'scroll',
+        // 设置 Reveal.js 展示页面顺序
         scrollProgress: true
     });
 });
@@ -114,11 +125,11 @@ onMounted(() => {
                     <div class="sl-block">
                         <div class="sl-block-content mt-4rem flex flex-row gap-4rem items-center justify-start"
                             data-placeholder-tag="p">
-                            <div @click="$router.push('/register')"
+                            <div @click="direct('/register')"
                                 class="b-white hover:bg-dark hover:cursor-pointer b-8px b-solid flex justify-center items-center">
                                 <h2 class="p-8px">免费注册</h2>
                             </div>
-                            <div @click="$router.push('/login')"
+                            <div @click="direct('/login')"
                                 class="bg-white hover:bg-coolGray hover:cursor-pointer sl-block-content flex justify-center items-center"
                                 data-placeholder-tag="p">
                                 <h2 class="!text-purple-700 p-16px">登录</h2>
