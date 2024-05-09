@@ -1,68 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
+import items from '@/scripts/items';
 
 // 右上角菜单
 const menu = ref();
-
-// 侧边栏内容
-const items = ref([
-    {
-        label: '烟雾生成',
-        icon: 'pi pi-chart-bar',
-        items: [
-            {
-                label: '生成',
-                icon: 'pi pi-chart-line',
-                command: () => {
-                    router.push('/dashboard/generate');
-                }
-            },
-            {
-                label: '历史',
-                icon: 'pi pi-list',
-                command: () => {
-                    router.push('/dashboard/generate/history');
-                }
-            }
-        ]
-    },
-    {
-        label: '烟雾拼接',
-        icon: 'pi pi-clone',
-        items: [
-            {
-                label: '拼接',
-                icon: 'pi pi-images',
-                command: () => {
-                    router.push('/dashboard/joint');
-                }
-            },
-            {
-                label: '历史',
-                icon: 'pi pi-history',
-                command: () => {
-                    router.push('/dashboard/joint/history');
-                }
-            },
-        ]
-    },
-    {
-        label: '个人资料',
-        icon: 'pi pi-user',
-        items: [
-            {
-                label: '设置',
-                icon: 'pi pi-cog',
-                command: () => {
-                    router.push('/dashboard/profile');
-                }
-            }
-        ]
-    }
-]);
 
 // 公告内容
 const announcement = ref<string>('');
@@ -70,10 +11,6 @@ const showAnnouncement = ref<boolean>(true);
 async function fetchAnnouncement() {
     announcement.value = '公告内容';
 }
-
-const toggle = (event: any) => {
-    menu.value.toggle(event);
-};
 
 onMounted(async () => {
     // 页面渲染完成后获取公告内容
@@ -94,35 +31,9 @@ onMounted(async () => {
         </div>
     </div>
     <div class="flex flex-col w-full h-full">
-        <Toolbar class="!border-rd-none">
-            <template #start>
-                <div class="pl-3">
-                    <span class="text-lg font-bold">控制台</span>
-                </div>
-            </template>
-            <template #end>
-                <div class="inline-flex items-center gap-2">
-                    <IconField iconPosition="left">
-                        <InputIcon>
-                            <i class="pi pi-search"></i>
-                        </InputIcon>
-                        <InputText placeholder="搜索" />
-                    </IconField>
-                    <Button type="button" severity="secondary" icon="pi pi-ellipsis-v" @click="toggle"
-                        aria-haspopup="true" aria-controls="overlay_menu"></Button>
-                    <Menu ref="menu" id="overlay_menu" :model="items" :popup="true"></Menu>
-                </div>
-            </template>
-        </Toolbar>
+        <TopBar></TopBar>
         <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc">
-            <PanelMenu :model="items" class="w-18rem">
-                <template #item="{ item }">
-                    <a v-ripple class="flex items-center px-3 py-2 cursor-pointer">
-                        <span :class="[item.icon, 'text-primary']"></span>
-                        <span :class="['ml-2', { 'font-semibold': item.items }]">{{ item.label }}</span>
-                    </a>
-                </template>
-            </PanelMenu>
+            <SidePanel></SidePanel>
             <Card class="w-full h-full">
                 <template #title>
                     <h1 class="text-2xl font-bold m-0">主页</h1>
