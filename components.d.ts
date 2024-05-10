@@ -12,6 +12,7 @@ declare module 'vue' {
     Card: typeof import('primevue/card')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
     ColoredCard: typeof import('./src/components/ColoredCard.vue')['default']
+    Dropdown: typeof import('primevue/dropdown')['default']
     Image: typeof import('primevue/image')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
