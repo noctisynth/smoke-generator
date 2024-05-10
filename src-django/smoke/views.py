@@ -1,3 +1,5 @@
+from os import name
+import re
 from smokegenerator.settings import MEDIA_ROOT
 from django.http import HttpRequest, JsonResponse
 import datetime
@@ -54,7 +56,7 @@ def generate(request: HttpRequest):
     r.pic_type = "烟雾"
     r.url = res_url
     r.save()
-
+    save_path = MEDIA_ROOT.joinpath(res_url)
     obj = record2json(r)
 
     return JsonResponse({"status": 200, "obj": obj})
@@ -91,7 +93,7 @@ def joint(request: HttpRequest):
     r.pic_type = "图片"
     r.url = res_url
     r.save()
-
+    save_path = MEDIA_ROOT.joinpath(res_url)
     obj = record2json(r)
     return JsonResponse({"status": 200, "obj": obj})
 
@@ -142,3 +144,68 @@ def styles(request: HttpRequest):
     a = ["styles/" + i for i in os.listdir(styles_dir)]
 
     return JsonResponse({"status": 200, "styles": a})
+
+
+def update(request: HttpRequest):
+    """
+    {
+        "token":"123",
+        "url":"url",
+        "type":"烟雾",
+        "name":"name",
+        "visiable":true,
+    }
+    """
+    data = selectData(request)
+    token: str = data.get("token", "")
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+
+    pic_type = data.get("type", 0)
+    visiable = data.get("visiable", None)
+    name = data.get("name", "")
+    url = data.get("url", "")
+
+    a = Record.objects.filter(user=ua, pic_type=pic_type, url=url)
+
+    if len(a) > 0:
+        if visiable:
+            a[0].visiable = visiable
+        if name:
+            a[0].name = name
+        a[0].save()
+        return JsonResponse({"status": 200, "message": "已更新"})
+    else:
+        return JsonResponse({"status": 404, "message": "记录未找到"})
+
+
+def delete(request: HttpRequest):
+    """
+    {
+        "token":"123",
+        "url":"url",
+        "type":"烟雾"
+    }
+    """
+
+    data = selectData(request)
+    token: str = data.get("token", "")
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+
+    url = data.get("url", "")
+    pic_type = data.get("type", "")
+
+    a = Record.objects.filter(user=ua, pic_type=pic_type, url=url)
+
+    if len(a) > 0:
+        for i in a:
+            i.delete()
+
+        return JsonResponse({"status": 200, "message": "删除成功"})
+    else:
+        return JsonResponse({"status": 404, "message": "记录不存在"})
