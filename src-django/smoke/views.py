@@ -10,7 +10,7 @@ import string
 def record2json(r: Record):
     return {
         "name": r.name,
-        "user": r.user,
+        "user": r.user.username,
         "type": r.pic_type,
         "date": r.date,
         "url": r.url,
@@ -34,8 +34,8 @@ def generate_smoke(uploaded_pic, selected_pic):
 # Create your views here.
 def generate(request: HttpRequest):
     token: str = request.POST.get("token", "")
-    uploaded_pic = request.POST.get("uploaded_pic")
-    selected_pic = request.POST.get("selected_pic")
+    uploaded_pic = request.FILES.get("uploaded_pic")
+    selected_pic = request.FILES.get("selected_pic")
 
     if not all([token, uploaded_pic, selected_pic]):
         return JsonResponse({"status": 402, "message": "参数错误"})
@@ -69,9 +69,10 @@ def model_handle(input_pic, smoke_pic, select_post):
 
 def joint(request: HttpRequest):
     token: str = request.POST.get("token", "")
-    input_pic = request.POST.get("input_pic")
+    input_pic = request.FILES.get("input_pic")
     smoke_pic = request.POST.get("smoke_pic")
     select_pos = request.POST.get("select_pos")
+    print(token, input_pic, smoke_pic, select_pos)
 
     if not all([token, input_pic, smoke_pic, select_pos]):
         return JsonResponse({"status": 402, "message": "参数错误"})
