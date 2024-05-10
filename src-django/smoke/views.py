@@ -6,7 +6,7 @@ import random
 import string
 
 
-def Record2Json(r: Record):
+def record2json(r: Record):
     return {
         "name": r.name,
         "user": r.user,
@@ -54,7 +54,7 @@ def generate(request: HttpRequest):
     r.url = res_url
     r.save()
 
-    obj = Record2Json(r)
+    obj = record2json(r)
 
     return JsonResponse({"status": 200, "obj": obj})
 
@@ -90,7 +90,7 @@ def joint(request: HttpRequest):
     r.url = res_url
     r.save()
 
-    obj = Record2Json(r)
+    obj = record2json(r)
     return JsonResponse({"status": 200, "obj": obj})
 
 
@@ -108,7 +108,7 @@ def generate_history(request: HttpRequest):
         return JsonResponse({"status": 403, "message": "用户未登录"})
     res = []
     for r in Record.objects.filter(user=ua, pic_type="烟雾"):
-        res.append(Record2Json(r))
+        res.append(record2json(r))
 
     return JsonResponse({"status": 200, "records": res})
 
@@ -128,6 +128,6 @@ def joint_history(request: HttpRequest):
 
     res = []
     for r in Record.objects.filter(user=ua, pic_type="图片"):
-        res.append(Record2Json(r))
+        res.append(record2json(r))
 
     return JsonResponse({"status": 200, "records": res})
