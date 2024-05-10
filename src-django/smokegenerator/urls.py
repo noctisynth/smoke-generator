@@ -22,5 +22,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("account/", include("account.urls")),
     path("billboard/", include("billboard.urls")),
-    path("smoke", include("smoke.urls")),
+    path("smoke/", include("smoke.urls")),
 ]

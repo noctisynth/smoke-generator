@@ -6,4 +6,5 @@ urlpatterns = [
     path("joint", views.joint),
     path("generate_history", views.generate_history),
     path("joint_history", views.joint_history),
+    path("styles", views.styles),
 ]

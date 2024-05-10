@@ -1,3 +1,4 @@
+from smokegenerator.settings import MEDIA_ROOT
 from django.http import HttpRequest, JsonResponse
 import datetime
 from util import verifyToken, selectData
@@ -131,3 +132,12 @@ def joint_history(request: HttpRequest):
         res.append(record2json(r))
 
     return JsonResponse({"status": 200, "records": res})
+
+
+def styles(request: HttpRequest):
+    styles_dir = MEDIA_ROOT.joinpath("styles")
+    import os
+
+    a = ["styles/" + i for i in os.listdir(styles_dir)]
+
+    return JsonResponse({"status": 200, "styles": a})
