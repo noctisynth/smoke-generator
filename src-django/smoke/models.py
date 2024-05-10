@@ -12,7 +12,7 @@ class Record(models.Model):
     )
     name = models.CharField(max_length=39 * 3, verbose_name="名称")
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, verbose_name="用户")
-    pic_type = status = models.CharField(
+    pic_type = models.CharField(
         max_length=39, choices=STATUS_CHOICES, default="图片", verbose_name="类型"
     )
     date = models.DateField(verbose_name="日期", default=datetime.date.today)

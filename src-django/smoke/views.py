@@ -1,32 +1,133 @@
-import select
-from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
+import datetime
+from util import verifyToken, selectData
+from .models import Record
+import random
+import string
+
+
+def Record2Json(r: Record):
+    return {
+        "name": r.name,
+        "user": r.user,
+        "type": r.pic_type,
+        "date": r.date,
+        "url": r.url,
+        "visiable": r.visiable,
+    }
+
+
+def get_name():
+    value = "".join(random.sample(string.ascii_letters + string.digits, 5))
+    current_datetime = datetime.datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y_%m_%d_%H_%M_%S")
+    return formatted_datetime + value + ".jpg"
 
 
 def generate_smoke(uploaded_pic, selected_pic):
-    return "url"
+    name = get_name()
+
+    return name
 
 
 # Create your views here.
-def func1(request: HttpRequest):
+def generate(request: HttpRequest):
+    token: str = request.POST.get("token", "")
     uploaded_pic = request.POST.get("uploaded_pic")
     selected_pic = request.POST.get("selected_pic")
 
-    res_url = generate_smoke(uploaded_pic, selected_pic)
+    if not all([token, uploaded_pic, selected_pic]):
+        return JsonResponse({"status": 402, "message": "参数错误"})
 
-    return JsonResponse({"status": 200, "res_url": res_url})
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+
+    res_name = generate_smoke(uploaded_pic, selected_pic)
+
+    res_url = "res/" + res_name
+    r = Record()
+    r.user = ua
+    r.name = res_name
+    r.pic_type = "烟雾"
+    r.url = res_url
+    r.save()
+
+    obj = Record2Json(r)
+
+    return JsonResponse({"status": 200, "obj": obj})
 
 
 def model_handle(input_pic, smoke_pic, select_post):
     # 模型处理得到图片，并保存，返回url
-    return "url"
+    name = get_name()
+
+    return name
 
 
-def func2(request: HttpRequest):
+def joint(request: HttpRequest):
+    token: str = request.POST.get("token", "")
     input_pic = request.POST.get("input_pic")
     smoke_pic = request.POST.get("smoke_pic")
     select_pos = request.POST.get("select_pos")
 
-    res_url = model_handle(input_pic, smoke_pic, select_pos)
+    if not all([token, input_pic, smoke_pic, select_pos]):
+        return JsonResponse({"status": 402, "message": "参数错误"})
 
-    return JsonResponse({"status": 200, "res_url": res_url})
+    res_name = model_handle(input_pic, smoke_pic, select_pos)
+
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+
+    res_url = "res/" + res_name
+    r = Record()
+    r.user = ua
+    r.name = res_name
+    r.pic_type = "图片"
+    r.url = res_url
+    r.save()
+
+    obj = Record2Json(r)
+    return JsonResponse({"status": 200, "obj": obj})
+
+
+def generate_history(request: HttpRequest):
+    """
+    {
+        "token":"123"
+    }
+    """
+    data = selectData(request)
+    token: str = data.get("token", "")
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+    res = []
+    for r in Record.objects.filter(user=ua, pic_type="烟雾"):
+        res.append(Record2Json(r))
+
+    return JsonResponse({"status": 200, "records": res})
+
+
+def joint_history(request: HttpRequest):
+    """
+    {
+        "token":"123"
+    }
+    """
+    data = selectData(request)
+    token: str = data.get("token", "")
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+
+    res = []
+    for r in Record.objects.filter(user=ua, pic_type="图片"):
+        res.append(Record2Json(r))
+
+    return JsonResponse({"status": 200, "records": res})
