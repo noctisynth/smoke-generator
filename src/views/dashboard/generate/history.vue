@@ -21,11 +21,21 @@ const visiables = ref([
     { label: "公开", value: true },
     { label: "私有", value: false },
 ]);
+const visiable_list = ref([true, false]);
+function getVisiable(e: any) {
+    if (e) {
+        return "公开";
+    } else {
+        return "私有";
+    }
+}
 const filters = ref({
-    name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    date: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    visiab: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    date: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    visiable: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
+
 const onRowEditSave = (event: any) => {
     let { newData, index } = event;
 
@@ -99,14 +109,14 @@ onMounted(async () => {
             <SidePanel></SidePanel>
             <div class="card w-full h-full">
                 <DataTable
-                    v-model:editingRows="editingRows"
-                    :value="history_data"
-                    editMode="row"
-                    dataKey="id"
-                    @row-edit-save="onRowEditSave"
-                    :globalFilterFields="['name', 'date', 'visiable']"
                     v-model:filters="filters"
+                    :value="history_data"
+                    dataKey="id"
                     filterDisplay="row"
+                    :globalFilterFields="['name', 'date', 'visiable']"
+                    v-model:editingRows="editingRows"
+                    editMode="row"
+                    @row-edit-save="onRowEditSave"
                 >
                     <template #header>
                         <div class="flex justify-content-end">
@@ -114,7 +124,10 @@ onMounted(async () => {
                                 <InputIcon>
                                     <i class="pi pi-search" />
                                 </InputIcon>
-                                <InputText placeholder="Keyword Search" />
+                                <InputText
+                                    v-model="filters['global'].value"
+                                    placeholder="Keyword Search"
+                                />
                             </IconField>
                         </div>
                     </template>
@@ -130,12 +143,50 @@ onMounted(async () => {
                         </template>
                     </Column>
                     <Column field="name" header="名称">
+                        <template #filter="{ filterModel, filterCallback }">
+                            <InputText
+                                v-model="filterModel.value"
+                                type="text"
+                                @input="filterCallback()"
+                                class="p-column-filter"
+                                placeholder="Name"
+                            />
+                        </template>
                         <template #editor="{ data, field }">
                             <InputText v-model="data[field]" />
                         </template>
                     </Column>
-                    <Column field="date" header="日期"></Column>
+                    <Column field="date" header="日期">
+                        <template #filter="{ filterModel, filterCallback }">
+                            <InputText
+                                v-model="filterModel.value"
+                                type="text"
+                                @input="filterCallback()"
+                                class="p-column-filter"
+                                placeholder="Date"
+                            /> </template
+                    ></Column>
+
                     <Column field="visiable" header="可见性">
+                        <template #body="{ data }">
+                            <Tag :value="getVisiable(data.status)" />
+                        </template>
+                        <template #filter="{ filterModel, filterCallback }">
+                            <Dropdown
+                                v-model="filterModel.value"
+                                @change="filterCallback()"
+                                :options="visiable_list"
+                                placeholder="Select One"
+                                :showClear="true"
+                            >
+                                <template #option="slotProps">
+                                    <Tag
+                                        :value="getVisiable(slotProps.option)"
+                                    />
+                                </template>
+                            </Dropdown>
+                        </template>
+
                         <template #editor="{ data, field }">
                             <Dropdown
                                 v-model="data[field]"
