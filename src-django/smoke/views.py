@@ -1,5 +1,3 @@
-from os import name
-import re
 from smokegenerator.settings import MEDIA_ROOT
 from django.http import HttpRequest, JsonResponse
 import datetime
@@ -35,28 +33,45 @@ def generate_smoke(uploaded_pic, selected_pic):
 
 # Create your views here.
 def generate(request: HttpRequest):
-    token: str = request.POST.get("token", "")
-    uploaded_pic = request.FILES.get("uploaded_pic")
-    selected_pic = request.FILES.get("selected_pic")
+    """
+    {
+        "token":"123",
+        "uploaded_pic":"",
+        "selected_pic":""
+    }
+    """
 
-    if not all([token, uploaded_pic, selected_pic]):
-        return JsonResponse({"status": 402, "message": "参数错误"})
-
+    data = selectData(request)
+    token: str = data.get("token", "")
     ua = verifyToken(token)
 
     if not ua:
         return JsonResponse({"status": 403, "message": "用户未登录"})
 
-    res_name = generate_smoke(uploaded_pic, selected_pic)
+    mask_pic: str = data.get("mask_pic", "")
+    style_pic: str = data.get("style_pic", "")
+
+    if not all([mask_pic, style_pic]):
+        return JsonResponse({"status": 402, "message": "参数错误"})
+
+    res_name = generate_smoke(mask_pic, style_pic)
+    src_pic = (
+        MEDIA_ROOT.joinpath("images")
+        .joinpath("smoke")
+        .joinpath(mask_pic.split(".")[0] + "-" + style_pic.split(".")[0] + ".jpg")
+    )
 
     res_url = "res/" + res_name
+    save_path = MEDIA_ROOT.joinpath(res_url)
+    import shutil
+
+    shutil.copyfile(src_pic, save_path)
     r = Record()
     r.user = ua
     r.name = res_name
     r.pic_type = "烟雾"
     r.url = res_url
     r.save()
-    save_path = MEDIA_ROOT.joinpath(res_url)
     obj = record2json(r)
 
     return JsonResponse({"status": 200, "obj": obj})
@@ -138,12 +153,21 @@ def joint_history(request: HttpRequest):
 
 
 def styles(request: HttpRequest):
-    styles_dir = MEDIA_ROOT.joinpath("styles")
+    styles_dir = MEDIA_ROOT.joinpath("images").joinpath("style")
     import os
 
-    a = ["styles/" + i for i in os.listdir(styles_dir)]
+    a = ["images/style/" + i for i in os.listdir(styles_dir)]
 
     return JsonResponse({"status": 200, "styles": a})
+
+
+def masks(request: HttpRequest):
+    masks_dir = MEDIA_ROOT.joinpath("images").joinpath("mask")
+    import os
+
+    a = ["images/mask/" + i for i in os.listdir(masks_dir)]
+
+    return JsonResponse({"status": 200, "masks": a})
 
 
 def update(request: HttpRequest):
