@@ -62,7 +62,7 @@ def generate(request: HttpRequest):
         .joinpath(mask_pic.split(".")[0] + "-" + style_pic.split(".")[0] + ".jpg")
     )
 
-    res_url = "/res/" + res_name
+    res_url = "res/" + res_name
     save_path = MEDIA_ROOT.joinpath(res_url)
     import shutil
 
@@ -71,7 +71,7 @@ def generate(request: HttpRequest):
     r.user = ua
     r.name = res_name
     r.pic_type = "烟雾"
-    r.url = res_url
+    r.url = "/" + res_url
     r.save()
     obj = record2json(r)
 
