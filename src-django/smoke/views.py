@@ -61,7 +61,7 @@ def generate(request: HttpRequest):
         .joinpath(mask_pic.split(".")[0] + "-" + style_pic.split(".")[0] + ".jpg")
     )
 
-    res_url = "res/" + res_name
+    res_url = "/res/" + res_name
     save_path = MEDIA_ROOT.joinpath(res_url)
     import shutil
 
@@ -156,7 +156,7 @@ def styles(request: HttpRequest):
     styles_dir = MEDIA_ROOT.joinpath("images").joinpath("style")
     import os
 
-    a = ["images/style/" + i for i in os.listdir(styles_dir)]
+    a = ["/images/style/" + i for i in os.listdir(styles_dir)]
 
     return JsonResponse({"status": 200, "styles": a})
 
@@ -165,7 +165,7 @@ def masks(request: HttpRequest):
     masks_dir = MEDIA_ROOT.joinpath("images").joinpath("mask")
     import os
 
-    a = ["images/mask/" + i for i in os.listdir(masks_dir)]
+    a = ["/images/mask/" + i for i in os.listdir(masks_dir)]
 
     return JsonResponse({"status": 200, "masks": a})
 
