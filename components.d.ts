@@ -13,6 +13,8 @@ declare module 'vue' {
     Card: typeof import('primevue/card')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
     ColoredCard: typeof import('./src/components/ColoredCard.vue')['default']
+    Column: typeof import('primevue/column')['default']
+    DataTable: typeof import('primevue/datatable')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
     Forbidden: typeof import('./src/components/Forbidden.vue')['default']
     Image: typeof import('primevue/image')['default']
