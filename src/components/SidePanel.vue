@@ -3,7 +3,7 @@ import items from '@/scripts/items';
 </script>
 
 <template>
-    <PanelMenu :model="items" class="w-18rem">
+    <PanelMenu :model="items" class="w-full h-full">
         <template #item="{ item }">
             <a v-ripple class="flex items-center px-3 py-2 cursor-pointer">
                 <span :class="[item.icon, 'text-primary']"></span>

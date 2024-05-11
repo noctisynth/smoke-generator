@@ -56,9 +56,9 @@ function saveChanges() {
         <Announcement></Announcement>
         <Toast></Toast>
         <TopBar></TopBar>
-        <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
-            <SidePanel></SidePanel>
-            <Card class="w-full h-full">
+        <div class="grid grid-cols-4 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
+            <SidePanel class="grid col-span-1"></SidePanel>
+            <Card class="grid col-span-3">
                 <template #title>
                     <div class="flex flex-row items-center justify-between gap-2">
                         <h1 class="text-2xl font-bold m-0">个人资料</h1>
