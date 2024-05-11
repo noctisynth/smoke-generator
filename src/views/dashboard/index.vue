@@ -17,6 +17,7 @@ if (!tokenStore.isLoggedIn()) {
 
 onMounted(() => {
     axios.post('/account/profile', { token: tokenStore.token }).then((res) => {
+        console.log(res.data);
         userStore.setUserInfo(res.data);
     }).catch(() => {
         toast.add({ severity: 'error', summary: '错误', detail: '服务器错误！', life: 3000 });
@@ -37,7 +38,7 @@ onMounted(() => {
                 </template>
                 <template #content>
                     <div class="flex flex-col gap-4">
-                        <span class="text-lg font-bold">{{ userStore.email }} 的账户</span>
+                        <span class="text-lg font-bold">{{ userStore.username }} 的账户</span>
                         <h2 class="text-sm font-bold m-0 text-coolGray-600">此处列出了一些功能快捷入口</h2>
                         <div class="grid grid-cols-2 gap-4">
                             <ColoredCard title="烟雾拼接" href="/dashboard/generate/" tag="拼接" class="w-full h-full">

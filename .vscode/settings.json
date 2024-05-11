@@ -10,6 +10,7 @@
         "primevue",
         "progressspinner",
         "unplugin",
-        "usetoast"
+        "usetoast",
+        "xlarge"
     ]
 }
