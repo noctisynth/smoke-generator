@@ -169,7 +169,7 @@ onMounted(async () => {
 
                     <Column field="visiable" header="可见性">
                         <template #body="{ data }">
-                            <Tag :value="getVisiable(data.status)" />
+                            <Tag :value="getVisiable(data.visiable)" />
                         </template>
                         <template #filter="{ filterModel, filterCallback }">
                             <Dropdown
