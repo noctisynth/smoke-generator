@@ -104,6 +104,7 @@ def profile(request: HttpRequest):
         return JsonResponse({"status": 403, "message": "用户未登录"})
 
     res_data = {
+        "username": ua.username,
         "phone": ua.phone,
         "email": ua.email,
         "status": ua.status,
