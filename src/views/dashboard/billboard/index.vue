@@ -6,9 +6,13 @@ import axios from "@/axios";
 import router from "@/router";
 
 const announcements = ref<any>();
+const show = ref<boolean>(false);
 async function getAnnouncementData() {
     let res = await axios.get("/billboard/all");
     announcements.value = res.data.data;
+    if (announcements.value.length > 0) {
+        show.value = true;
+    }
 }
 
 onMounted(async () => {
@@ -36,39 +40,47 @@ onMounted(async () => {
                 </template>
 
                 <template #content>
-                    <div v-for="a in announcements" class="mb-4">
-                        <Panel toggleable>
-                            <template #header>
-                                <div class="flex align-items-center gap-2">
-                                    <span class="font-bold">{{ a.title }}</span>
-                                </div>
-                            </template>
-                            <template #footer>
-                                <div
-                                    class="flex flex-wrap align-items-center justify-content-between gap-3"
-                                >
-                                    <span class="p-text-secondary">{{
-                                        a.date
-                                    }}</span>
-                                    <span class="p-text-secondary">{{
-                                        a.author
-                                    }}</span>
-                                    <span
-                                        class="p-text-secondary underline font-bold"
-                                        @click="
-                                            router.push(
-                                                '/dashboard/billboard/' + a.id
-                                            )
-                                        "
+                    <div v-if="show">
+                        <div v-for="a in announcements" class="mb-4">
+                            <Panel toggleable>
+                                <template #header>
+                                    <div class="flex align-items-center gap-2">
+                                        <span class="font-bold">{{
+                                            a.title
+                                        }}</span>
+                                    </div>
+                                </template>
+                                <template #footer>
+                                    <div
+                                        class="flex flex-wrap align-items-center justify-content-between gap-3"
                                     >
-                                        详情</span
-                                    >
-                                </div>
-                            </template>
-                            <p class="m-0">
-                                {{ a.intro }}
-                            </p>
-                        </Panel>
+                                        <span class="p-text-secondary">{{
+                                            a.date
+                                        }}</span>
+                                        <span class="p-text-secondary">{{
+                                            a.author
+                                        }}</span>
+                                        <span
+                                            class="p-text-secondary underline font-bold"
+                                            @click="
+                                                router.push(
+                                                    '/dashboard/billboard/' +
+                                                        a.id
+                                                )
+                                            "
+                                        >
+                                            详情</span
+                                        >
+                                    </div>
+                                </template>
+                                <p class="m-0">
+                                    {{ a.intro }}
+                                </p>
+                            </Panel>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <p>暂无公告数据</p>
                     </div>
                 </template>
             </Card>
