@@ -106,18 +106,27 @@ onMounted(async () => {
         <div class="grid grid-cols-4 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
             <SidePanel class="grid col-span-1"></SidePanel>
             <Card class="grid col-span-3">
+                <template #title>
+                    <div class="flex flex-row items-center justify-between gap-2">
+                        <h1 class="text-2xl font-bold m-0">烟雾生成历史</h1>
+                        <IconField iconPosition="left">
+                            <InputIcon class="flex items-center justify-center">
+                                <i class="pi pi-search"></i>
+                            </InputIcon>
+                            <InputText v-model="filters['global'].value" placeholder="关键词搜索" />
+                        </IconField>
+                    </div>
+                </template>
                 <template #content>
                     <DataTable v-model:filters="filters" :value="history_data" dataKey="id" filterDisplay="row"
                         :globalFilterFields="['name', 'date', 'visiable']" v-model:editingRows="editingRows"
                         editMode="row" @row-edit-save="onRowEditSave">
+                        <template #empty>
+                            <h2>暂无历史数据</h2>
+                        </template>
                         <template #header>
                             <div class="flex justify-end">
-                                <IconField iconPosition="left">
-                                    <InputIcon>
-                                        <i class="pi pi-search" />
-                                    </InputIcon>
-                                    <InputText v-model="filters['global'].value" placeholder="关键词搜索" />
-                                </IconField>
+
                             </div>
                         </template>
                         <Column field="url" header="图片">
@@ -129,7 +138,7 @@ onMounted(async () => {
                         <Column field="name" header="名称">
                             <template #filter="{ filterModel, filterCallback }">
                                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()"
-                                    class="p-column-filter" placeholder="名称" />
+                                    class="p-column-filter min-w-10rem" placeholder="名称" />
                             </template>
                             <template #editor="{ data, field }">
                                 <InputText v-model="data[field]" />
@@ -138,7 +147,7 @@ onMounted(async () => {
                         <Column field="date" header="日期">
                             <template #filter="{ filterModel, filterCallback }">
                                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()"
-                                    class="p-column-filter" placeholder="时间" />
+                                    class="p-column-filter min-w-10rem" placeholder="时间" />
                             </template>
                         </Column>
 
@@ -147,8 +156,8 @@ onMounted(async () => {
                                 <Tag :value="getVisible(data.visiable)" />
                             </template>
                             <template #filter="{ filterModel, filterCallback }">
-                                <Dropdown v-model="filterModel.value" @change="filterCallback()"
-                                    :options="visibleList" placeholder="选择" :showClear="true">
+                                <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="visibleList"
+                                    placeholder="选择" :showClear="true">
                                     <template #option="slotProps">
                                         <Tag :value="getVisible(slotProps.option)" />
                                     </template>
