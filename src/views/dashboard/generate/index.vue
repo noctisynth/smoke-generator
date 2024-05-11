@@ -43,13 +43,15 @@ function styleChanged(value: any) {
     selectedStyle.value = value;
 }
 
+// 烟雾生成
+const generatedSmoke = ref<string>('');
 const inProgress = ref<boolean>(false);
 async function generateSmoke() {
     active.value = 2;
     inProgress.value = true;
 
     // 发送生成烟雾请求
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     console.log({
         token: tokenStore.token,
         mask: masks.value[selectedMask.value].split('/').pop(),
@@ -60,8 +62,11 @@ async function generateSmoke() {
         mask_pic: masks.value[selectedMask.value].split('/').pop(),
         style_pic: styles.value[selectedStyle.value].split('/').pop()
     }).then((res) => {
-        if (res.data.status === 200)
+        if (res.data.status === 200) {
+            const obj = res.data.obj;
+            generatedSmoke.value = obj.url;
             toast.add({ severity: 'success', summary: '烟雾生成成功！', detail: res.data.message, life: 3000 });
+        }
         else
             toast.add({ severity: 'error', summary: '烟雾生成失败！', detail: res.data.message, life: 3000 });
         inProgress.value = false;
@@ -184,7 +189,10 @@ onMounted(async () => {
                             <template #content>
                                 <div class="flex flex-col gap-2 mx-auto">
                                     <h2 class="text-lg font-bold pl-10">生成烟雾</h2>
-                                    <div v-if="!inProgress"></div>
+                                    <div v-if="!inProgress" class="flex justify-center items-center">
+                                        <Image class="w-30rem h-30rem rounded" imageClass="rounded"
+                                            :src="generatedSmoke" preview></Image>
+                                    </div>
                                     <div v-else>
                                         <div class="flex justify-center items-center">
                                             <ProgressSpinner></ProgressSpinner>
