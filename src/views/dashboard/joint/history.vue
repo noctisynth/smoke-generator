@@ -2,6 +2,11 @@
 import { onMounted, ref } from "vue";
 import items from "@/scripts/items";
 import { FilterMatchMode } from "primevue/api";
+import { useToast } from "primevue/usetoast";
+import { useTokenStore } from "@/stores/token";
+
+const toast = useToast();
+const useToken = useTokenStore();
 // 右上角菜单
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -39,36 +44,62 @@ const filters = ref({
 const onRowEditSave = (event: any) => {
     let { newData, index } = event;
 
-    // post 修改值，图片url不会变，可依此 作为id
-    history_data.value[index] = newData;
+    let url = history_data.value[index].url;
+    let type = history_data.value[index].type;
+    let name = newData.name;
+    let visiable = newData.visiable;
+    axios
+        .post("/smoke/update", {
+            token: useToken.token,
+            url: url,
+            type: type,
+            name: name,
+            visiable: visiable,
+        })
+        .then((res) => {
+            let data = res.data;
+            if (data.status == 200) {
+                toast.add({
+                    severity: "success",
+                    summary: "成功",
+                    detail: "修改成功！",
+                    life: 3000,
+                });
+                // post 修改值，图片url不会变，可依此 作为id
+                history_data.value[index] = newData;
+            } else {
+                toast.add({
+                    severity: "error",
+                    summary: "错误",
+                    detail: "修改失败",
+                    life: 3000,
+                });
+            }
+        });
 };
 async function getHistoryData() {
-    history_data.value = [
-        {
-            name: "2024_05_10_13_03_59zcLAn.jpg",
-            user: "bash",
-            type: "烟雾",
-            date: "2024-05-10",
-            url: "res/2024_05_10_13_03_59zcLAn.jpg",
-            visiable: false,
-        },
-        {
-            name: "2024_05_10_13_04_34A8paz.jpg",
-            user: "bash",
-            type: "烟雾",
-            date: "2024-05-10",
-            url: "res/2024_05_10_13_04_34A8paz.jpg",
-            visiable: false,
-        },
-        {
-            name: "2024_05_10_13_06_52RHxaL.jpg",
-            user: "bash",
-            type: "烟雾",
-            date: "2024-05-10",
-            url: "res/2024_05_10_13_06_52RHxaL.jpg",
-            visiable: false,
-        },
-    ];
+    let res = await axios.post("/smoke/joint_history", {
+        token: useToken.token,
+    });
+    history_data.value = res.data.records;
+}
+async function deleteHistory(data: any) {
+    let res = await axios.post("/smoke/delete", {
+        token: useToken.token,
+        type: data.type,
+        url: data.url,
+    });
+    console.log(res);
+    if (res.data.status == 200) {
+        console.log(123);
+        toast.add({
+            severity: "success",
+            summary: "成功",
+            detail: "删除成功！",
+            life: 3000,
+        });
+    }
+    await getHistoryData();
 }
 
 onMounted(async () => {
@@ -203,6 +234,14 @@ onMounted(async () => {
                         style="width: 20%; min-width: 8rem"
                         bodyStyle="text-align:center"
                     ></Column>
+                    <Column header="删除" style="width: 10%; min-width: 8rem">
+                        <template #body="slotProps">
+                            <Button
+                                @click="deleteHistory(slotProps.data)"
+                                label="删除"
+                            ></Button>
+                        </template>
+                    </Column>
                 </DataTable>
             </div>
         </div>
