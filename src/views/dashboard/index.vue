@@ -30,9 +30,9 @@ onMounted(() => {
         <Announcement></Announcement>
         <Toast></Toast>
         <TopBar></TopBar>
-        <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
-            <SidePanel></SidePanel>
-            <Card class="w-full h-full">
+        <div class="grid md:grid-cols-4 lg:grid-cols-5 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
+            <SidePanel class="grid col-span-1"></SidePanel>
+            <Card class="grid md:col-span-3 lg:md:col-span-4">
                 <template #title>
                     <h1 class="text-2xl font-bold m-0">主页</h1>
                 </template>

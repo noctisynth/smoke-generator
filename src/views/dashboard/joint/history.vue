@@ -104,9 +104,9 @@ onMounted(async () => {
         <Announcement></Announcement>
         <Toast></Toast>
         <TopBar></TopBar>
-        <div class="grid grid-cols-4 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
+        <div class="grid md:grid-cols-4 lg:grid-cols-5 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
             <SidePanel class="grid col-span-1"></SidePanel>
-            <Card class="grid col-span-3">
+            <Card class="grid md:col-span-3 lg:md:col-span-4">
                 <template #title>
                     <div class="flex flex-row items-center justify-between gap-2">
                         <h1 class="text-2xl font-bold m-0">烟雾拼接历史</h1>
