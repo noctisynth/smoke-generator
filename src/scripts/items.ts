@@ -1,5 +1,7 @@
 import { ref } from "vue";
 import router from "@/router";
+import { useTokenStore } from "@/stores/token";
+import axios from "@/axios";
 
 // 侧边栏内容
 export default ref([
@@ -44,14 +46,26 @@ export default ref([
     ],
   },
   {
-    label: "个人资料",
+    label: "账户管理",
     icon: "pi pi-user",
     items: [
       {
-        label: "设置",
+        label: "个人资料",
         icon: "pi pi-cog",
         command: () => {
           router.push("/dashboard/profile");
+        },
+      },
+      {
+        label: "登出",
+        icon: "pi pi-sign-out",
+        command: () => {
+          const tokenStore = useTokenStore();
+          axios
+            .post("/account/logout", { token: tokenStore.token })
+            .then(() => {});
+          tokenStore.removeToken();
+          router.push("/login");
         },
       },
     ],

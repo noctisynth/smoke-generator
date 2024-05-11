@@ -2,9 +2,16 @@
 import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
+import axios from '@/axios';
+import { useTokenStore } from '@/stores/token';
 
 const toast = useToast();
 const router = useRouter();
+const tokenStore = useTokenStore();
+
+if (tokenStore.isLoggedIn()) {
+    router.push('/dashboard');
+}
 
 // 注册参数
 const username = ref('');
@@ -38,11 +45,23 @@ async function login() {
 
     // 登录
     inProgress.value = true;
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    toast.add({ severity: 'success', summary: '成功', detail: '登录成功！', life: 3000 });
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    router.push('/dashboard');
+    const res = await axios.post('/account/login', { username: username.value, password: password.value }).catch(() => {
+        toast.add({ severity: 'error', summary: '错误', detail: '用户名或密码错误！', life: 3000 });
+    });
     inProgress.value = false;
+    if (!res) {
+        toast.add({ severity: 'error', summary: '错误', detail: 'Axios 请求失败！', life: 3000 });
+        return;
+    }
+
+    if (res.data.status === 200) {
+        tokenStore.setToken(res.data.token);
+        toast.add({ severity: 'success', summary: '成功', detail: '登录成功！', life: 3000 });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        router.push('/dashboard');
+    } else {
+        toast.add({ severity: 'error', summary: '错误', detail: res.data.message, life: 3000 });
+    }
 }
 </script>
 
