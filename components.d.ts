@@ -11,6 +11,7 @@ declare module 'vue' {
     Button: typeof import('primevue/button')['default']
     ColoredCard: typeof import('./src/components/ColoredCard.vue')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
+    Forbidden: typeof import('./src/components/Forbidden.vue')['default']
     Image: typeof import('primevue/image')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
