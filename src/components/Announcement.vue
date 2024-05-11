@@ -21,7 +21,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div :class="['fixed inset-x-0 bottom-0 p-4', { 'hidden': !showAnnouncement }]">
+    <div :class="['fixed inset-x-0 bottom-0 p-4 z-10000', { 'hidden': !showAnnouncement }]">
         <div class="relative flex items-center justify-between rounded-lg bg-indigo-600 px-4 py-1 text-white shadow-lg">
             <p class="text-sm font-medium">
                 {{ announcement }}
