@@ -29,7 +29,7 @@ onMounted(() => {
         <Announcement></Announcement>
         <Toast></Toast>
         <TopBar></TopBar>
-        <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc">
+        <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
             <SidePanel></SidePanel>
             <Card class="w-full h-full">
                 <template #title>
