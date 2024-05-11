@@ -9,6 +9,7 @@ class Announcement(models.Model):
 
     content = models.TextField(max_length=39 * 100, verbose_name="内容")
     date = models.DateField(verbose_name="日期", default=datetime.date.today)
+    author = models.CharField(max_length=39, verbose_name="发布者", default="管理员")
 
     class Meta:
         verbose_name = "公告"

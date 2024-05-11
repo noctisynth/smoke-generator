@@ -14,6 +14,7 @@ def latest(request: HttpRequest):
                     "title": last.title,
                     "content": last.content,
                     "date": last.date,
+                    "author": last.author,
                 },
             }
         )
@@ -31,6 +32,7 @@ def all(request: HttpRequest):
                 "title": i.title,
                 "content": i.content,
                 "date": i.date,
+                "author": i.author,
             }
         )
 
