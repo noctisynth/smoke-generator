@@ -1,22 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import items from "@/scripts/items";
 import { FilterMatchMode } from "primevue/api";
-import { useToast } from "primevue/usetoast";
-import { useTokenStore } from "@/stores/token";
-
-const toast = useToast();
-const useToken = useTokenStore();
 
 import axios from "@/axios";
-const menu = ref();
-
-// 公告内容
-const announcement = ref<string>("");
-const showAnnouncement = ref<boolean>(true);
-async function fetchAnnouncement() {
-    announcement.value = "公告内容";
-}
 
 const announcements = ref<any>();
 async function getAnnouncementData() {
@@ -32,8 +18,6 @@ const filters = ref({
 });
 onMounted(async () => {
     // 页面渲染完成后获取公告内容
-
-    await fetchAnnouncement();
     await getAnnouncementData();
 });
 </script>
