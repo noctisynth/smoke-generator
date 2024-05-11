@@ -2,9 +2,11 @@
 import axios from '@/axios';
 import { useTokenStore } from '@/stores/token';
 import { useToast } from 'primevue/usetoast';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
 const toast = useToast();
+const router = useRouter();
 const tokenStore = useTokenStore();
 
 const oldPassword = ref('');
@@ -12,12 +14,26 @@ const password = ref('');
 const passwordConfirm = ref('');
 
 function updatePassword() {
+    if (!oldPassword.value) {
+        toast.add({ severity: 'error', summary: '错误', detail: '请输入旧密码', life: 3000 });
+        return;
+    }
+    if (!password.value) {
+        toast.add({ severity: 'error', summary: '错误', detail: '请输入新密码', life: 3000 });
+        return;
+    }
     if (password.value !== passwordConfirm.value) {
         toast.add({ severity: 'error', summary: '错误', detail: '两次输入的密码不一致', life: 3000 });
         return;
     }
     axios.post('/account/update', { token: tokenStore.token, password: password.value }).then((res) => {
-        toast.add({ severity:'success', summary: '成功', detail: '密码修改成功', life: 3000 });
+        if (res.data.status === 200) {
+            toast.add({ severity: 'success', summary: '成功', detail: '密码修改成功', life: 3000 });
+            tokenStore.removeToken();
+            router.push('/login');
+        }
+        else
+            toast.add({ severity: 'error', summary: '错误', detail: '密码修改失败', life: 3000 });
     }).catch((err) => {
         toast.add({ severity: 'error', summary: '错误', detail: '密码修改失败', life: 3000 });
     });
