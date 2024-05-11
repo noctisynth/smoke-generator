@@ -3,8 +3,11 @@
     "python.analysis.autoImportCompletions": true,
     "cSpell.words": [
         "axios",
+        "inputtext",
+        "panelmenu",
         "pinia",
         "primevue",
+        "progressspinner",
         "usetoast"
     ]
 }

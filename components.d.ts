@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     Announcement: typeof import('./src/components/Announcement.vue')['default']
     Button: typeof import('primevue/button')['default']
+    Card: typeof import('primevue/card')['default']
+    Checkbox: typeof import('primevue/checkbox')['default']
     ColoredCard: typeof import('./src/components/ColoredCard.vue')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
     Forbidden: typeof import('./src/components/Forbidden.vue')['default']
@@ -16,9 +18,12 @@ declare module 'vue' {
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
     PanelMenu: typeof import('primevue/panelmenu')['default']
+    Password: typeof import('primevue/password')['default']
+    ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SidePanel: typeof import('./src/components/SidePanel.vue')['default']
+    Tag: typeof import('primevue/tag')['default']
     Toolbar: typeof import('primevue/toolbar')['default']
     TopBar: typeof import('./src/components/TopBar.vue')['default']
   }
