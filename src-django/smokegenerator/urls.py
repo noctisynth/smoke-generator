@@ -16,12 +16,21 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.http import HttpResponseRedirect
+from django.views.generic.base import TemplateView
 from django.urls import path, include, re_path
 from django.views.static import serve
 from django.conf import settings
 
+
+def for_admin(_):
+    return HttpResponseRedirect("/admin/")
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("admin", for_admin),
+    path("", TemplateView.as_view(template_name="index.html")),
     path("account/", include("account.urls")),
     path("billboard/", include("billboard.urls")),
     path("smoke/", include("smoke.urls")),

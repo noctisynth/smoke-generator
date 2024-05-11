@@ -60,7 +60,7 @@ ROOT_URLCONF = "smokegenerator.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR, BASE_DIR.parent.joinpath("dist")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
