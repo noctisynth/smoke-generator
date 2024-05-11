@@ -3,19 +3,14 @@ import { onMounted, ref } from "vue";
 import { FilterMatchMode } from "primevue/api";
 
 import axios from "@/axios";
+import router from "@/router";
 
 const announcements = ref<any>();
 async function getAnnouncementData() {
     let res = await axios.get("/billboard/all");
     announcements.value = res.data.data;
-    console.log(announcements);
 }
-const filters = ref({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    author: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    date: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-});
+
 onMounted(async () => {
     // 页面渲染完成后获取公告内容
     await getAnnouncementData();
@@ -37,35 +32,44 @@ onMounted(async () => {
                         class="flex flex-row items-center justify-between gap-2"
                     >
                         <h1 class="text-2xl font-bold m-0">系统公告</h1>
-                        <IconField iconPosition="left">
-                            <InputIcon class="flex items-center justify-center">
-                                <i class="pi pi-search"></i>
-                            </InputIcon>
-                            <InputText
-                                v-model="filters['global'].value"
-                                placeholder="关键词搜索"
-                            />
-                        </IconField>
                     </div>
                 </template>
 
                 <template #content>
-                    <DataTable
-                        v-model:filters="filters"
-                        :value="announcements"
-                        dataKey="id"
-                        filterDisplay="row"
-                    >
-                        <template #empty>
-                            <h2>暂无公告</h2>
-                        </template>
-                        <template #header>
-                            <div class="flex justify-end"></div>
-                        </template>
-                        <Column field="title" header="标题"></Column>
-                        <Column field="author" header="发布者"></Column>
-                        <Column field="date" header="日期"></Column>
-                    </DataTable>
+                    <div v-for="a in announcements" class="mb-4">
+                        <Panel toggleable>
+                            <template #header>
+                                <div class="flex align-items-center gap-2">
+                                    <span class="font-bold">{{ a.title }}</span>
+                                </div>
+                            </template>
+                            <template #footer>
+                                <div
+                                    class="flex flex-wrap align-items-center justify-content-between gap-3"
+                                >
+                                    <span class="p-text-secondary">{{
+                                        a.date
+                                    }}</span>
+                                    <span class="p-text-secondary">{{
+                                        a.author
+                                    }}</span>
+                                    <span
+                                        class="p-text-secondary underline font-bold"
+                                        @click="
+                                            router.push(
+                                                '/dashboard/billboard/' + a.id
+                                            )
+                                        "
+                                    >
+                                        详情</span
+                                    >
+                                </div>
+                            </template>
+                            <p class="m-0">
+                                {{ a.intro }}
+                            </p>
+                        </Panel>
+                    </div>
                 </template>
             </Card>
         </div>

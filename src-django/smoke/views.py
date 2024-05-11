@@ -9,6 +9,7 @@ import string
 
 def record2json(r: Record):
     return {
+        "id": r.id,  # type: ignore
         "name": r.name,
         "user": r.user.username,
         "type": r.pic_type,
