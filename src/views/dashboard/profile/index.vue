@@ -39,12 +39,12 @@ function saveChanges() {
         data.append('avatar', newAvatar.value);
     axios.post('/account/update', data).then((res) => {
         if (res.data.status === 200) {
-            toast.add({ severity: 'success', summary: '更新成功', detail: '个人资料已更新成功！' });
+            toast.add({ severity: 'success', summary: '更新成功', detail: '个人资料已更新成功！', life: 3000 });
         } else {
-            toast.add({ severity: 'error', summary: '更新失败', detail: '个人资料更新失败：' + res.data.message });
+            toast.add({ severity: 'error', summary: '更新失败', detail: '个人资料更新失败：' + res.data.message, life: 3000 });
         }
     }).catch(() => {
-        toast.add({ severity: 'error', summary: '更新失败', detail: '服务器错误。' });
+        toast.add({ severity: 'error', summary: '更新失败', detail: '服务器错误。', life: 3000 });
     }).finally(() => {
         isEditing.value = false;
     });
