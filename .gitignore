@@ -196,3 +196,6 @@ cython_debug/
 # Infini Package Manager
 *.db
 .ipm-build
+
+# Unplugin
+components.d.ts
