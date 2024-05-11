@@ -39,6 +39,11 @@ const filters = ref({
 const onRowEditSave = (event: any) => {
     let { newData, index } = event;
 
+    let url = history_data.value[index].url;
+    let type = history_data.value[index].type;
+    let name = newData.name;
+    let visiable = newData.visiable;
+    // 因为还没有token，暂时写不了
     // post 修改值，图片url不会变，可依此 作为id
     history_data.value[index] = newData;
 };
@@ -169,7 +174,7 @@ onMounted(async () => {
 
                     <Column field="visiable" header="可见性">
                         <template #body="{ data }">
-                            <Tag :value="getVisiable(data.status)" />
+                            <Tag :value="getVisiable(data.visiable)" />
                         </template>
                         <template #filter="{ filterModel, filterCallback }">
                             <Dropdown
