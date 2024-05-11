@@ -84,17 +84,29 @@ async function register() {
 
     // 注册
     inProgress.value = true;
-    await axios.post('/account/add', {
-        username: username.value,
-        email: email.value,
-        password: password.value,
-        phone: phone.value,
-        type: type.value,
-        avatar: avatar.value
-    }).then(() => {
-        // 注册成功，切换到成功页面
-        toast.add({ severity: 'success', summary: '成功', detail: '注册成功！', life: 3000 });
-        active.value = 2;
+    const data = new FormData();
+    data.append('username', username.value);
+    data.append('email', email.value);
+    data.append('password', password.value);
+    data.append('phone', phone.value);
+    data.append('status', type.value);
+    if (!avatar.value) {
+        toast.add({ severity: 'error', summary: '错误', detail: '请上传头像！', life: 3000 });
+        return;
+    }
+    data.append('avatar', avatar.value);
+    await axios.post('/account/add', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    }).then((res) => {
+        if (res.data.status === 200) {
+            toast.add({ severity: 'success', summary: '成功', detail: '注册成功！', life: 3000 });
+            // 注册成功，切换到成功页面
+            active.value = 2;
+        } else {
+            toast.add({ severity: 'error', summary: '错误', detail: res.data.message, life: 3000 });
+        }
     }).catch((error: any) => {
         toast.add({ severity: 'error', summary: '错误', detail: error, life: 3000 });
     }).finally(() => {

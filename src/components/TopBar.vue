@@ -13,7 +13,7 @@ const toggle = (event: any) => {
     <Toolbar class="!border-rd-none">
         <template #start>
             <div class="pl-3">
-                <span class="text-lg font-bold">控制台</span>
+                <span class="text-lg font-bold" @click="$router.push('/dashboard')">控制台</span>
             </div>
         </template>
         <template #end>

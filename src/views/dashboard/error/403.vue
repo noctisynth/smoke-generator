@@ -1,19 +1,8 @@
 <script setup lang="ts">
-import items from '@/scripts/items';
 </script>
 
 <template>
-    <div :class="['fixed inset-x-0 bottom-0 p-4', (showAnnouncement ? '' : 'hidden')]">
-        <div class="relative flex items-center justify-between rounded-lg bg-indigo-600 px-4 py-1 text-white shadow-lg">
-            <p class="text-sm font-medium">
-                {{ announcement }}
-            </p>
-
-            <Button @click="showAnnouncement = false" icon="pi pi-times text-coolGray hover:!text-white"
-                class="hover:!bg-indigo-600 hover:!text-white" plain text>
-            </Button>
-        </div>
-    </div>
+    <Announcement></Announcement>
     <div class="flex flex-col w-full h-full">
         <TopBar></TopBar>
         <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc">
