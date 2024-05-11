@@ -10,6 +10,7 @@ const toast = useToast();
 const router = useRouter();
 const tokenStore = useTokenStore();
 const userStore = useUserStore();
+const loading = ref(true);
 
 const active = ref<number>(0);
 
@@ -19,13 +20,23 @@ if (!tokenStore.isLoggedIn()) {
 
 const masks = ref();
 const styles = ref();
-
-onMounted(async () => {
+async function load(): Promise<boolean> {
+    let status = true;
     masks.value = await axios.get('/smoke/masks').then((res) => { return res.data }).catch((err) => {
         toast.add({ severity: 'error', summary: '数据获取失败！', detail: err.message });
+        status = false
     })
     styles.value = await axios.get('/smoke/styles').then((res) => { return res.data }).catch((err) => {
         toast.add({ severity: 'error', summary: '数据获取失败！', detail: err.message });
+        status = false
+    })
+    return status
+}
+
+onMounted(async () => {
+    load().then((status) => {
+        if (status)
+            loading.value = false;
     })
 });
 </script>
@@ -42,7 +53,7 @@ onMounted(async () => {
                     <h1 class="text-2xl font-bold m-0">烟雾生成</h1>
                 </template>
                 <template #content>
-                    <Stepper class="w-full h-full" v-model:activeStep="active" linear>
+                    <Stepper class="w-full h-full" v-model:activeStep="active" linear v-if="!loading">
                         <StepperPanel>
                             <template #header="{ index, clickCallback }">
                                 <button class="bg-transparent border-none inline-flex flex-col gap-2"
@@ -89,6 +100,9 @@ onMounted(async () => {
                             </template>
                         </StepperPanel>
                     </Stepper>
+                    <div class="flex justify-center items-center h-full" v-else>
+                        <ProgressSpinner />
+                    </div>
                 </template>
             </Card>
         </div>
