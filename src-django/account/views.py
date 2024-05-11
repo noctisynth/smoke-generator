@@ -17,6 +17,8 @@ def add(request: HttpRequest):
     email: str = request.POST.get("email", "")
     stauts: str = request.POST.get("status", "")
     avatar = request.FILES.get("avatar", None)
+    print(avatar)
+    print(request.FILES)
 
     if not all([username, password, phone, email, stauts, avatar]):
         return JsonResponse({"status": 402, "message": "参数错误"})
@@ -152,4 +154,12 @@ def update(request: HttpRequest):
 
     ua.save()
 
-    return JsonResponse({"status": 200})
+    res_data = {
+        "username": ua.username,
+        "phone": ua.phone,
+        "email": ua.email,
+        "status": ua.status,
+        "avatar": ua.avatar.url,  # type: ignore
+    }
+
+    return JsonResponse(res_data)
