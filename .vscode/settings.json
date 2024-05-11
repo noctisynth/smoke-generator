@@ -4,10 +4,13 @@
     "cSpell.words": [
         "axios",
         "inputtext",
+        "nocheck",
         "panelmenu",
         "pinia",
         "primevue",
         "progressspinner",
-        "usetoast"
+        "unplugin",
+        "usetoast",
+        "xlarge"
     ]
 }

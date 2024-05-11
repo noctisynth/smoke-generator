@@ -57,6 +57,13 @@ export default ref([
         },
       },
       {
+        label: "修改密码",
+        icon: "pi pi-lock",
+        command: () => {
+          router.push("/dashboard/profile/password");
+        }
+      },
+      {
         label: "登出",
         icon: "pi pi-sign-out",
         command: () => {

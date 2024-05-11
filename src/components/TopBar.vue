@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import items from '@/scripts/items';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const menu = ref();
+const theme = ref('light');
 
 const toggle = (event: any) => {
     menu.value.toggle(event);
 };
+
+function changeTheme() {
+    if (theme.value === 'light') {
+        theme.value = 'dark';
+        document.documentElement.classList.add('dark');
+    } else {
+        theme.value = 'light';
+        document.documentElement.classList.remove('dark');
+    }
+}
 </script>
 
 <template>
@@ -18,6 +29,7 @@ const toggle = (event: any) => {
         </template>
         <template #end>
             <div class="inline-flex items-center gap-2">
+                <Button :icon="(theme === 'light' ? 'pi pi-sun' : 'pi pi-moon')" @click="changeTheme" plain text></Button>
                 <IconField iconPosition="left">
                     <InputIcon>
                         <i class="pi pi-search"></i>
