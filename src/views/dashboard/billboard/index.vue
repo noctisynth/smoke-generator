@@ -39,37 +39,32 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div
-        :class="[
-            'fixed inset-x-0 bottom-0 p-4',
-            showAnnouncement ? '' : 'hidden',
-        ]"
-    >
-        <div
-            class="relative flex items-center justify-between rounded-lg bg-indigo-600 px-4 py-1 text-white shadow-lg"
-        >
-            <p class="text-sm font-medium">
-                {{ announcement }}
-            </p>
-
-            <Button
-                @click="showAnnouncement = false"
-                icon="pi pi-times text-coolGray hover:!text-white"
-                class="hover:!bg-indigo-600 hover:!text-white"
-                plain
-                text
-            >
-            </Button>
-        </div>
-    </div>
     <div class="flex flex-col w-full h-full">
+        <Announcement></Announcement>
+        <Toast></Toast>
         <TopBar></TopBar>
-        <div class="flex flex-row w-full p-1rem gap-4 h-full bg-#f8fafc">
-            <SidePanel></SidePanel>
-            <Card class="w-full h-full">
+        <div
+            class="grid grid-cols-4 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900"
+        >
+            <SidePanel class="grid col-span-1"></SidePanel>
+            <Card class="grid col-span-3">
                 <template #title>
-                    <h1 class="text-2xl font-bold m-0">系统公告</h1>
+                    <div
+                        class="flex flex-row items-center justify-between gap-2"
+                    >
+                        <h1 class="text-2xl font-bold m-0">系统公告</h1>
+                        <IconField iconPosition="left">
+                            <InputIcon class="flex items-center justify-center">
+                                <i class="pi pi-search"></i>
+                            </InputIcon>
+                            <InputText
+                                v-model="filters['global'].value"
+                                placeholder="关键词搜索"
+                            />
+                        </IconField>
+                    </div>
                 </template>
+
                 <template #content>
                     <DataTable
                         v-model:filters="filters"
@@ -77,18 +72,11 @@ onMounted(async () => {
                         dataKey="id"
                         filterDisplay="row"
                     >
+                        <template #empty>
+                            <h2>暂无公告</h2>
+                        </template>
                         <template #header>
-                            <div class="flex justify-content-end">
-                                <IconField iconPosition="left">
-                                    <InputIcon>
-                                        <i class="pi pi-search" />
-                                    </InputIcon>
-                                    <InputText
-                                        v-model="filters['global'].value"
-                                        placeholder="Keyword Search"
-                                    />
-                                </IconField>
-                            </div>
+                            <div class="flex justify-end"></div>
                         </template>
                         <Column field="title" header="标题"></Column>
                         <Column field="author" header="发布者"></Column>
