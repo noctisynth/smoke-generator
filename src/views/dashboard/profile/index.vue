@@ -20,6 +20,7 @@ if (!tokenStore.isLoggedIn()) {
 
 const isEditing = ref(false);
 const newAvatar = ref<File | null>(null);
+const typeOptions = ['个人', '企业'];
 
 // 剪切并暂存头像
 function updateAvatar(value: { index: null; fileName: string; file: File; blob: Blob, dataURL: string }) {
@@ -113,27 +114,23 @@ function saveChanges() {
                         </div>
                         <div class="flex flex-row items-center gap-2rem">
                             <span class="text-sm font-bold">用户名:</span>
-                            <IconField>
-                                <InputIcon>
-                                    <i class="pi pi-user"></i>
-                                </InputIcon>
-                                <InputText id="username" v-model="userStore.username" type="text" placeholder="用户名" />
-                            </IconField>
+                            <h2 class="text-sm font-medium m-0">
+                                {{ userStore.username }}
+                            </h2>
                         </div>
                         <div class="flex flex-row items-center gap-2rem">
                             <span class="text-sm font-bold">邮箱:</span>
                             <IconField>
                                 <InputIcon>
-                                    <i class="pi pi-user"></i>
+                                    <i class="pi pi-envelope"></i>
                                 </InputIcon>
                                 <InputText id="email" v-model="userStore.email" type="text" placeholder="邮箱" />
                             </IconField>
                         </div>
                         <div class="flex flex-row items-center gap-2rem">
                             <span class="text-sm font-bold">账户类型:</span>
-                            <p class="text-sm font-medium m-0">
-                                {{ userStore.status }}
-                            </p>
+                            <Dropdown v-model="userStore.status" :options="typeOptions" placeholder="用户类型">
+                            </Dropdown>
                         </div>
                         <div class="flex flex-row items-center gap-2rem">
                             <span class="text-sm font-bold">联系方式:</span>
