@@ -37,7 +37,7 @@ function saveChanges() {
     data.append('status', userStore.status);
     if (newAvatar.value)
         data.append('avatar', newAvatar.value);
-    axios.post('/account/update', data).then(res => {
+    axios.post('/account/update', data, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
         toast.add({ severity: 'success', summary: '更新成功', detail: '个人资料已更新成功！', life: 3000 });
         userStore.setUserInfo(res.data);
     }).catch(() => {
