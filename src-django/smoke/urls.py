@@ -10,4 +10,5 @@ urlpatterns = [
     path("masks", views.masks),
     path("delete", views.delete),
     path("update", views.update),
+    path("get", views.get),
 ]

@@ -242,3 +242,44 @@ def delete(request: HttpRequest):
         return JsonResponse({"status": 200, "message": "删除成功"})
     else:
         return JsonResponse({"status": 404, "message": "记录不存在"})
+
+
+def get(request: HttpRequest):
+    """
+    {
+        "token":"123",
+        "id":1
+    }
+    """
+    data = selectData(request)
+
+    _id = data.get("id", None)
+
+    if not _id:
+        return JsonResponse({"status": 402, "message": "参数错误"})
+
+    a = Record.objects.filter(id=_id)
+    if len(a) > 0:
+        r = a[0]
+        user_info = {
+            "username": r.user.username,
+            "email": r.user.email,
+            "status": r.user.status,
+            "avatar": r.user.avatar.url,
+        }
+        if r.visiable:
+            return JsonResponse(
+                {"status": 200, "record": record2json(r), "user": user_info}
+            )
+        else:
+            token: str = data.get("token", "")
+            ua = verifyToken(token)
+
+            if r.user == ua:
+                return JsonResponse(
+                    {"status": 200, "record": record2json(r), "user": user_info}
+                )
+            else:
+                return JsonResponse({"status": 403, "message": "用户未登录或无权限"})
+    else:
+        return JsonResponse({"status": 404, "message": "记录未找到"})
