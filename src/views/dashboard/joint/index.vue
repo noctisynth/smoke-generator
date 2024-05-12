@@ -48,7 +48,7 @@ async function jointSmoke() {
         toast.add({ severity: 'error', summary: '请先上传图片！', life: 3000 });
         return;
     }
-    // active.value = 2;
+    active.value = 2;
     inProgress.value = true;
 
     let cropData: { x: number, y: number, width: number, height: number } = cropper.value.getData();
@@ -64,16 +64,8 @@ async function jointSmoke() {
         "(" + (cropData.x + cropData.width).toFixed(0).toString() + ", "
         + (cropData.y + cropData.height).toFixed(0).toString() + ")"
     );
-    console.log({
-        token: tokenStore.token,
-        input_pic: uploadedImage.value,
-        smoke_id: smokes.value[selectedMask.value].id,
-        pos1: "(" + cropData.x.toFixed(0).toString() + ", " + cropData.y.toFixed(0).toString() + ")",
-        pos2: "(" + (cropData.x + cropData.width).toFixed(0).toString() + ", "
-            + (cropData.y + cropData.height).toFixed(0).toString() + ")"
-    });
 
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     axios.post('/smoke/joint', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     }).then((res) => {
@@ -81,6 +73,7 @@ async function jointSmoke() {
             const obj = res.data.obj;
             generatedSmoke.value = obj.url;
             toast.add({ severity: 'success', summary: '烟雾生成成功！', detail: res.data.message, life: 3000 });
+            router.push('/dashboard/joint/' + obj.id);
         }
         else
             toast.add({ severity: 'error', summary: '烟雾生成失败！', detail: res.data.message, life: 3000 });

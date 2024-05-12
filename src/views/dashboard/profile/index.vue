@@ -37,8 +37,9 @@ function saveChanges() {
     data.append('status', userStore.status);
     if (newAvatar.value)
         data.append('avatar', newAvatar.value);
-    axios.post('/account/update', data).then(_ => {
+    axios.post('/account/update', data, { headers: { 'Content-Type': 'multipart/form-data' } }).then(res => {
         toast.add({ severity: 'success', summary: '更新成功', detail: '个人资料已更新成功！', life: 3000 });
+        userStore.setUserInfo(res.data);
     }).catch(() => {
         toast.add({ severity: 'error', summary: '更新失败', detail: '服务器错误。', life: 3000 });
     }).finally(() => {
@@ -97,7 +98,7 @@ function saveChanges() {
                     <div v-else class="flex flex-col gap-2rem m-2rem">
                         <div class="flex flex-row items-center gap-2rem">
                             <span class="text-sm font-bold">用户头像:</span>
-                            <ImgCutter :tool="false" :toolBoxOverflow="false" @cutDown="updateAvatar" @onPrintImg="(v: any) => console.log(v)">
+                            <ImgCutter :tool="false" :toolBoxOverflow="false" @cutDown="updateAvatar">
                                 <template #open>
                                     <div class="group w-5rem h-5rem inline-flex items-center justify-center
                                                     hover:bg-coolGray-400 bg-coolGray-200 cursor-pointer b-rd-full">
