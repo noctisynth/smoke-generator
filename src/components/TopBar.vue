@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import items from '@/scripts/items';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 const menu = ref();
 const theme = ref('light');
@@ -23,13 +23,14 @@ function changeTheme() {
 <template>
     <Toolbar class="!border-rd-none">
         <template #start>
-            <div class="pl-3">
+            <div class="pl-3 cursor-pointer">
                 <span class="text-lg font-bold" @click="$router.push('/dashboard')">控制台</span>
             </div>
         </template>
         <template #end>
             <div class="inline-flex items-center gap-2">
-                <Button :icon="(theme === 'light' ? 'pi pi-sun' : 'pi pi-moon')" @click="changeTheme" plain text></Button>
+                <Button :icon="(theme === 'light' ? 'pi pi-sun' : 'pi pi-moon')" @click="changeTheme" plain
+                    text></Button>
                 <IconField iconPosition="left">
                     <InputIcon>
                         <i class="pi pi-search"></i>

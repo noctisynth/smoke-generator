@@ -139,6 +139,9 @@ onMounted(async () => {
                             <template #editor="{ data, field }">
                                 <InputText v-model="data[field]" />
                             </template>
+                            <template #body="{ data }">
+                                <Button :label="data.name" @click="$router.push('/dashboard/joint/' + data.id)" plain text></Button>
+                            </template>
                         </Column>
                         <Column field="date" header="日期">
                             <template #filter="{ filterModel, filterCallback }">

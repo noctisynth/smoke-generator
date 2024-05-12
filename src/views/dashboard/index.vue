@@ -17,7 +17,6 @@ if (!tokenStore.isLoggedIn()) {
 
 onMounted(() => {
     axios.post('/account/profile', { token: tokenStore.token }).then((res) => {
-        console.log(res.data);
         userStore.setUserInfo(res.data);
     }).catch(() => {
         toast.add({ severity: 'error', summary: '错误', detail: '服务器错误！', life: 3000 });
@@ -45,7 +44,10 @@ onMounted(() => {
                             </ColoredCard>
                             <ColoredCard title="烟雾生成" href="/dashboard/joint/" tag="生成" class="w-full h-full">
                             </ColoredCard>
-                            <ColoredCard title="烟雾生成" href="/dashboard/joint/" tag="生成" class="w-full h-full">
+                            <ColoredCard title="烟雾生成历史" href="/dashboard/generate/history/" tag="生成"
+                                class="w-full h-full">
+                            </ColoredCard>
+                            <ColoredCard title="烟雾拼接历史" href="/dashboard/joint/history/" tag="拼接" class="w-full h-full">
                             </ColoredCard>
                         </div>
                     </div>
