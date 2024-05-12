@@ -5,6 +5,7 @@ from util import verifyToken, selectData
 from .models import Record
 import random
 import string
+import shutil
 
 
 def record2json(r: Record):
@@ -64,7 +65,6 @@ def generate(request: HttpRequest):
 
     res_url = "res/" + res_name
     save_path = MEDIA_ROOT.joinpath(res_url)
-    import shutil
 
     shutil.copyfile(src_pic, save_path)
     r = Record()
@@ -78,7 +78,7 @@ def generate(request: HttpRequest):
     return JsonResponse({"status": 200, "obj": obj})
 
 
-def model_handle(input_pic, smoke_pic, select_post):
+def model_handle(input_pic, smoke_pic, pos1, pos2):
     # 模型处理得到图片，并保存，返回url
     name = get_name()
 
@@ -87,29 +87,37 @@ def model_handle(input_pic, smoke_pic, select_post):
 
 def joint(request: HttpRequest):
     token: str = request.POST.get("token", "")
-    input_pic = request.FILES.get("input_pic")
-    smoke_pic = request.POST.get("smoke_pic")
-    select_pos = request.POST.get("select_pos")
-    print(token, input_pic, smoke_pic, select_pos)
-
-    if not all([token, input_pic, smoke_pic, select_pos]):
-        return JsonResponse({"status": 402, "message": "参数错误"})
-
-    res_name = model_handle(input_pic, smoke_pic, select_pos)
-
+    print(token)
     ua = verifyToken(token)
 
     if not ua:
         return JsonResponse({"status": 403, "message": "用户未登录"})
 
+    input_pic = request.FILES.get("input_pic")
+    smoke_id = request.POST.get("smoke_id")
+    pos1 = eval(request.POST.get("pos1"))  # type: ignore
+    pos2 = eval(request.POST.get("pos2"))  # type: ignore
+    # 已为你 转为tuple
+
+    if not all([input_pic, smoke_id, pos1, pos2]):
+        return JsonResponse({"status": 402, "message": "参数错误"})
+
+    input_pic_path = MEDIA_ROOT.joinpath("images").joinpath(input_pic.name)  # type: ignore
+    with open(input_pic_path, "wb") as f:
+        for c in input_pic.chunks():  # type: ignore
+            f.write(c)
+
+    res_name = model_handle(input_pic.name, smoke_id, pos1, pos2)  # type: ignore
     res_url = "res/" + res_name
+    save_path = MEDIA_ROOT.joinpath(res_url)
+    shutil.copyfile(input_pic_path, save_path)
+
     r = Record()
     r.user = ua
     r.name = res_name
     r.pic_type = "图片"
-    r.url = res_url
+    r.url = "/" + res_url
     r.save()
-    save_path = MEDIA_ROOT.joinpath(res_url)
     obj = record2json(r)
     return JsonResponse({"status": 200, "obj": obj})
 
