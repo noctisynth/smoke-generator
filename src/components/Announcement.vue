@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import axios from '@/axios';
 import { useAnnounceStore } from '@/stores/announce';
 import { onMounted, ref } from 'vue';
 
@@ -8,6 +9,17 @@ const announceStore = useAnnounceStore();
 const announcement = ref<string>('');
 const showAnnouncement = ref<boolean>(!announceStore.closed);
 async function fetchAnnouncement() {
+    axios.post('/billboard/latest').then(res => {
+        if (res.data.status === 200) {
+            announcement.value = res.data.data.content;
+            showAnnouncement.value = true;
+        } else {
+            showAnnouncement.value = false;
+        }
+    }).catch(err => {
+        showAnnouncement.value = false;
+        console.error(err);
+    });
     announcement.value = '公告内容';
 }
 function closeAnnouncement() {
