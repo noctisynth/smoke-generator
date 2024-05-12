@@ -52,11 +52,6 @@ async function generateSmoke() {
 
     // 发送生成烟雾请求
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    console.log({
-        token: tokenStore.token,
-        mask: masks.value[selectedMask.value].split('/').pop(),
-        style: styles.value[selectedStyle.value].split('/').pop()
-    })
     axios.post('/smoke/generate', {
         token: tokenStore.token,
         mask_pic: masks.value[selectedMask.value].split('/').pop(),
