@@ -73,8 +73,10 @@ async function jointSmoke() {
             + (cropData.y + cropData.height).toFixed(0).toString() + ")"
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    axios.post('/smoke/joint', formData).then((res) => {
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    axios.post('/smoke/joint', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }).then((res) => {
         if (res.data.status === 200) {
             const obj = res.data.obj;
             generatedSmoke.value = obj.url;
