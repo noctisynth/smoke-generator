@@ -12,7 +12,7 @@
                     <h1 class="text-2xl font-bold m-0">错误</h1>
                 </template>
                 <template #content>
-                    <Error :code="403" desc="访问越权"></Error>
+                    <Error :code="404" desc="页面未找到"></Error>
                 </template>
             </Card>
         </div>
