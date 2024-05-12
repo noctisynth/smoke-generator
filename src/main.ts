@@ -26,16 +26,16 @@ pinia.use(piniaPluginPersistedstate);
 
 const app = createApp(App);
 app.use(PrimeVue, {
-    ripple: true,
-    theme: {
-        base: PrimeOne,
-        preset: Aura,
-        options: {
-            prefix: "p",
-            darkModeSelector: ".dark",
-            cssLayer: false,
-        },
+  ripple: true,
+  theme: {
+    base: PrimeOne,
+    preset: Aura,
+    options: {
+      prefix: "p",
+      darkModeSelector: ".dark",
+      cssLayer: false,
     },
+  },
 });
 
 app.directive("ripple", Ripple);

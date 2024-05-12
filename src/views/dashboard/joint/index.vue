@@ -4,7 +4,9 @@ import { useTokenStore } from '@/stores/token';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import { useUserStore } from '@/stores/user';
+// @ts-ignore
+import VueCropper from 'vue-cropperjs';
+import "cropperjs/dist/cropper.css";
 
 const toast = useToast();
 const router = useRouter();
@@ -17,14 +19,12 @@ if (!tokenStore.isLoggedIn()) {
     router.push('/login');
 }
 
-const masks = ref<string[]>([]);
-const styles = ref<string[]>([]);
+const smokes = ref<any[]>([]);
 const selectedMask = ref(0);
-const selectedStyle = ref(0);
 async function load(): Promise<boolean> {
     // 加载类型及样式数据
     let status = true;
-    await axios.post('/smoke/generate_history', { token: tokenStore.token }).then((res) => { masks.value = res.data.records }).catch((err) => {
+    await axios.post('/smoke/generate_history', { token: tokenStore.token }).then((res) => { smokes.value = res.data.records }).catch((err) => {
         toast.add({ severity: 'error', summary: '数据获取失败！', detail: err.message });
         status = false
     })
@@ -34,25 +34,47 @@ async function load(): Promise<boolean> {
 function maskChanged(value: any) {
     selectedMask.value = value;
 }
-// 更新选择的烟雾样式
-function styleChanged(value: any) {
-    selectedStyle.value = value;
-}
+
+// 图片裁剪实例
+const cropper = ref<VueCropper | null>(null);
+const uploadedImage = ref<File | null>(null);
+const uploadedSrc = ref<string | ArrayBuffer | null>(null);
 
 // 烟雾生成
 const generatedSmoke = ref<string>('');
 const inProgress = ref<boolean>(false);
-async function generateSmoke() {
-    active.value = 2;
+async function jointSmoke() {
+    if (!uploadedImage.value || !uploadedSrc.value) {
+        toast.add({ severity: 'error', summary: '请先上传图片！', life: 3000 });
+        return;
+    }
+    // active.value = 2;
     inProgress.value = true;
 
+    let cropData: { x: number, y: number, width: number, height: number } = cropper.value.getData();
+
     // 发送生成烟雾请求
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    axios.post('/smoke/generate', {
+    const formData = new FormData();
+    formData.append('token', tokenStore.token);
+    formData.append('input_pic', uploadedImage.value);
+    formData.append('smoke_id', smokes.value[selectedMask.value].id);
+    formData.append('pos1', "(" + cropData.x.toFixed(0).toString() + ", " + cropData.y.toFixed(0).toString() + ")");
+    formData.append(
+        'pos2',
+        "(" + (cropData.x + cropData.width).toFixed(0).toString() + ", "
+        + (cropData.y + cropData.height).toFixed(0).toString() + ")"
+    );
+    console.log({
         token: tokenStore.token,
-        mask_pic: masks.value[selectedMask.value].split('/').pop(),
-        style_pic: styles.value[selectedStyle.value].split('/').pop()
-    }).then((res) => {
+        input_pic: uploadedImage.value,
+        smoke_id: smokes.value[selectedMask.value].id,
+        pos1: "(" + cropData.x.toFixed(0).toString() + ", " + cropData.y.toFixed(0).toString() + ")",
+        pos2: "(" + (cropData.x + cropData.width).toFixed(0).toString() + ", "
+            + (cropData.y + cropData.height).toFixed(0).toString() + ")"
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    axios.post('/smoke/joint', formData).then((res) => {
         if (res.data.status === 200) {
             const obj = res.data.obj;
             generatedSmoke.value = obj.url;
@@ -64,6 +86,20 @@ async function generateSmoke() {
     }).catch((err) => {
         toast.add({ severity: 'error', summary: '烟雾生成失败！', detail: err.message, life: 3000 });
     })
+}
+
+// 图片上传
+function uploader(event: any) {
+    const file: File = event.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        if (event.target) {
+            uploadedSrc.value = event.target.result;
+            cropper.value.replace(uploadedSrc.value)
+        }
+    };
+    uploadedImage.value = file;
+    reader.readAsDataURL(file);
 }
 
 onMounted(async () => {
@@ -102,7 +138,7 @@ onMounted(async () => {
                                     <h2 class="text-lg font-bold pl-10">选择烟雾</h2>
                                     <div class="flex justify-center items-center">
                                         <Carousel class="w-30rem" :page="selectedMask" @update:page="maskChanged"
-                                            :value="masks" :numVisible="1" :numScroll="1">
+                                            :value="smokes" :numVisible="1" :numScroll="1">
                                             <template #item="slotProps">
                                                 <div class="b-1.5 b-solid b-coolGray b-rd m-2 p-3">
                                                     <div class="flex justify-center items-center">
@@ -121,7 +157,7 @@ onMounted(async () => {
                                     <div class="flex pt-4 justify-end">
                                         <Button label="选择样式" icon="pi pi-arrow-right" iconPos="right"
                                             @click="active = 1"></Button>
-                                    </div> 
+                                    </div>
                                 </div>
                             </template>
                         </StepperPanel>
@@ -137,15 +173,25 @@ onMounted(async () => {
                             </template>
                             <template #content>
                                 <div class="flex flex-col gap-2 mx-auto">
-                                    <h2 class="text-lg font-bold pl-10">选择烟雾样式</h2>
+                                    <h2 class="text-lg font-bold pl-10">上传并框选图片</h2>
                                     <div class="flex justify-center items-center">
-                                        
+                                        <div
+                                            :class="['justify-center items-center flex-col gap-2rem', (uploadedSrc ? 'flex' : 'hidden')]">
+                                            <VueCropper class="max-w-full w-30rem" :zoomable="false" :view-mode="1"
+                                                :aspect-ratio="16 / 9" :src="uploadedSrc" ref="cropper">
+                                            </VueCropper>
+                                            <Button icon="pi pi-times" label="取消"
+                                                @click="uploadedSrc = null; uploadedImage = null"></Button>
+                                        </div>
+                                        <FileUpload v-if="!uploadedImage" mode="basic" name="demo[]" url="/api/upload"
+                                            accept="image/*" chooseLabel="上传图片" customUpload @uploader="uploader"
+                                            auto />
                                     </div>
                                     <div class="flex pt-4 justify-between">
                                         <Button label="选择类型" icon="pi pi-arrow-left" severity="secondary"
                                             @click="active = 0"></Button>
-                                        <Button label="生成烟雾" icon="pi pi-arrow-right" iconPos="right"
-                                            @click="generateSmoke"></Button>
+                                        <Button label="合成图片" icon="pi pi-arrow-right" iconPos="right"
+                                            @click="jointSmoke"></Button>
                                     </div>
                                 </div>
                             </template>
@@ -189,4 +235,10 @@ onMounted(async () => {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+:deep(.cropper-point.point-se) {
+    border-radius: 50%;
+    height: 5px;
+    width: 5px;
+}
+</style>
