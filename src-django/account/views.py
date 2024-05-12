@@ -127,7 +127,7 @@ def update(request: HttpRequest):
     }
     不需要更新的直接留空
     """
-    data = selectData(request)
+    data = request.POST
 
     token: str = data.get("token", "")
     ua = verifyToken(token)
