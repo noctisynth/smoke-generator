@@ -261,14 +261,24 @@ def get(request: HttpRequest):
     a = Record.objects.filter(id=_id)
     if len(a) > 0:
         r = a[0]
+        user_info = {
+            "username": r.user.username,
+            "email": r.user.email,
+            "status": r.user.status,
+            "avatar": r.user.avatar.url,
+        }
         if r.visiable:
-            return JsonResponse({"status": 200, "record": record2json(r)})
+            return JsonResponse(
+                {"status": 200, "record": record2json(r), "user": user_info}
+            )
         else:
             token: str = data.get("token", "")
             ua = verifyToken(token)
 
             if r.user == ua:
-                return JsonResponse({"status": 200, "record": record2json(r)})
+                return JsonResponse(
+                    {"status": 200, "record": record2json(r), "user": user_info}
+                )
             else:
                 return JsonResponse({"status": 403, "message": "用户未登录或无权限"})
     else:
