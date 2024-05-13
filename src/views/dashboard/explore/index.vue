@@ -1,15 +1,4 @@
 <script setup lang="ts">
-import axios from '@/axios';
-import { useTokenStore } from '@/stores/token';
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useToast } from 'primevue/usetoast';
-import { useUserStore } from '@/stores/user';
-
-const toast = useToast();
-const router = useRouter();
-const tokenStore = useTokenStore();
-const userStore = useUserStore();
 </script>
 
 <template>
@@ -26,11 +15,10 @@ const userStore = useUserStore();
                 <template #content>
                     <div class="flex flex-col gap-4">
                         <div class="grid grid-cols-2 gap-4">
-                            <ColoredCard title="烟雾拼接" href="/dashboard/explore/synthesis/" tag="拼接"
+                            <ColoredCard title="探索合成图" href="/dashboard/explore/synthesis/" tag="拼接"
                                 class="w-full h-full">
                             </ColoredCard>
-                            <ColoredCard title="烟雾生成" href="/dashboard/explore/generate/" tag="生成"
-                                class="w-full h-full">
+                            <ColoredCard title="探索烟雾图" href="/dashboard/explore/smoke/" tag="生成" class="w-full h-full">
                             </ColoredCard>
                         </div>
                     </div>

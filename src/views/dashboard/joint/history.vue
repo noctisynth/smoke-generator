@@ -165,7 +165,7 @@ onMounted(async () => {
                                 <InputText v-model="data[field]" />
                             </template>
                             <template #body="{ data }">
-                                <Button :label="data.name" @click="$router.push('/dashboard/joint/' + data.id)" plain text></Button>
+                                <Button :label="data.name" @click="$router.push('/dashboard/explore/synthesis/' + data.id)" plain text></Button>
                             </template>
                         </Column>
                         <Column field="date" header="日期">
