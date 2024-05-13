@@ -29,7 +29,7 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     date: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    visiable: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    visible: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 
 const onRowEditSave = (event: any) => {
@@ -38,14 +38,14 @@ const onRowEditSave = (event: any) => {
     let url = history_data.value[index].url;
     let type = history_data.value[index].type;
     let name = newData.name;
-    let visible = newData.visiable;
+    let visible = newData.visible;
     axios
         .post("/smoke/update", {
             token: useToken.token,
             url: url,
             type: type,
             name: name,
-            visiable: visible,
+            visible: visible,
         })
         .then((res) => {
             let data = res.data;
@@ -103,42 +103,64 @@ onMounted(async () => {
         <Announcement></Announcement>
         <Toast></Toast>
         <TopBar></TopBar>
-        <div class="grid md:grid-cols-4 lg:grid-cols-5 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900">
+        <div
+            class="grid md:grid-cols-4 lg:grid-cols-5 w-full p-1rem gap-4 h-full bg-#f8fafc dark:bg-dark-900"
+        >
             <SidePanel class="grid col-span-1"></SidePanel>
             <Card class="grid md:col-span-3 lg:md:col-span-4">
                 <template #title>
-                    <div class="flex flex-row items-center justify-between gap-2">
+                    <div
+                        class="flex flex-row items-center justify-between gap-2"
+                    >
                         <h1 class="text-2xl font-bold m-0">烟雾生成历史</h1>
                         <IconField iconPosition="left">
                             <InputIcon class="flex items-center justify-center">
                                 <i class="pi pi-search"></i>
                             </InputIcon>
-                            <InputText v-model="filters['global'].value" placeholder="关键词搜索" />
+                            <InputText
+                                v-model="filters['global'].value"
+                                placeholder="关键词搜索"
+                            />
                         </IconField>
                     </div>
                 </template>
                 <template #content>
-                    <DataTable v-model:filters="filters" :value="history_data" dataKey="id" filterDisplay="row"
-                        :globalFilterFields="['name', 'date', 'visiable']" v-model:editingRows="editingRows"
-                        editMode="row" @row-edit-save="onRowEditSave">
+                    <DataTable
+                        v-model:filters="filters"
+                        :value="history_data"
+                        dataKey="id"
+                        filterDisplay="row"
+                        :globalFilterFields="['name', 'date', 'visible']"
+                        v-model:editingRows="editingRows"
+                        editMode="row"
+                        @row-edit-save="onRowEditSave"
+                    >
                         <template #empty>
                             <h2>暂无历史数据</h2>
                         </template>
                         <template #header>
-                            <div class="flex justify-end">
-
-                            </div>
+                            <div class="flex justify-end"></div>
                         </template>
                         <Column field="url" header="图片">
                             <template #body="slotProps">
-                                <Image :src="slotProps.data.url" :alt="123" image-class="w-6rem b-rd"
-                                    class="w-6rem b-rd" preview />
+                                <Image
+                                    :src="slotProps.data.url"
+                                    :alt="123"
+                                    image-class="w-6rem b-rd"
+                                    class="w-6rem b-rd"
+                                    preview
+                                />
                             </template>
                         </Column>
                         <Column field="name" header="名称">
                             <template #filter="{ filterModel, filterCallback }">
-                                <InputText v-model="filterModel.value" type="text" @input="filterCallback()"
-                                    class="p-column-filter min-w-10rem" placeholder="名称" />
+                                <InputText
+                                    v-model="filterModel.value"
+                                    type="text"
+                                    @input="filterCallback()"
+                                    class="p-column-filter min-w-10rem"
+                                    placeholder="名称"
+                                />
                             </template>
                             <template #editor="{ data, field }">
                                 <InputText v-model="data[field]" />
@@ -146,35 +168,64 @@ onMounted(async () => {
                         </Column>
                         <Column field="date" header="日期">
                             <template #filter="{ filterModel, filterCallback }">
-                                <InputText v-model="filterModel.value" type="text" @input="filterCallback()"
-                                    class="p-column-filter min-w-10rem" placeholder="时间" />
+                                <InputText
+                                    v-model="filterModel.value"
+                                    type="text"
+                                    @input="filterCallback()"
+                                    class="p-column-filter min-w-10rem"
+                                    placeholder="时间"
+                                />
                             </template>
                         </Column>
 
-                        <Column field="visiable" header="可见性">
+                        <Column field="visible" header="可见性">
                             <template #body="{ data }">
-                                <Tag :value="getVisible(data.visiable)" />
+                                <Tag :value="getVisible(data.visible)" />
                             </template>
                             <template #filter="{ filterModel, filterCallback }">
-                                <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="visibleList"
-                                    placeholder="选择" :showClear="true">
+                                <Dropdown
+                                    v-model="filterModel.value"
+                                    @change="filterCallback()"
+                                    :options="visibleList"
+                                    placeholder="选择"
+                                    :showClear="true"
+                                >
                                     <template #option="slotProps">
-                                        <Tag :value="getVisible(slotProps.option)" />
+                                        <Tag
+                                            :value="
+                                                getVisible(slotProps.option)
+                                            "
+                                        />
                                     </template>
                                 </Dropdown>
                             </template>
 
                             <template #editor="{ data, field }">
-                                <Dropdown v-model="data[field]" :options="visibilities" optionLabel="label"
-                                    optionValue="value" placeholder="Select a Status">
+                                <Dropdown
+                                    v-model="data[field]"
+                                    :options="visibilities"
+                                    optionLabel="label"
+                                    optionValue="value"
+                                    placeholder="Select a Status"
+                                >
                                 </Dropdown>
                             </template>
                         </Column>
-                        <Column :rowEditor="true" style="width: 20%; min-width: 8rem" bodyStyle="text-align:center">
+                        <Column
+                            :rowEditor="true"
+                            style="width: 20%; min-width: 8rem"
+                            bodyStyle="text-align:center"
+                        >
                         </Column>
-                        <Column header="删除" style="width: 10%; min-width: 8rem">
+                        <Column
+                            header="删除"
+                            style="width: 10%; min-width: 8rem"
+                        >
                             <template #body="slotProps">
-                                <Button @click="deleteHistory(slotProps.data)" label="删除"></Button>
+                                <Button
+                                    @click="deleteHistory(slotProps.data)"
+                                    label="删除"
+                                ></Button>
                             </template>
                         </Column>
                     </DataTable>

@@ -2,21 +2,21 @@ from smokegenerator.settings import MEDIA_ROOT
 from django.http import HttpRequest, JsonResponse
 import datetime
 from util import verifyToken, selectData
-from .models import Record
+from .models import SmokeRecord, JointRecord
 import random
 import string
 import shutil
 
 
-def record2json(r: Record):
+def record2json(r: SmokeRecord | JointRecord, pic_type):
     return {
         "id": r.id,  # type: ignore
         "name": r.name,
         "user": r.user.username,
-        "type": r.pic_type,
         "date": r.date,
+        "type": pic_type,
         "url": r.url,
-        "visiable": r.visiable,
+        "visible": r.visible,
     }
 
 
@@ -67,13 +67,12 @@ def generate(request: HttpRequest):
     save_path = MEDIA_ROOT.joinpath(res_url)
 
     shutil.copyfile(src_pic, save_path)
-    r = Record()
+    r = SmokeRecord()
     r.user = ua
     r.name = res_name
-    r.pic_type = "烟雾"
     r.url = "/" + res_url
     r.save()
-    obj = record2json(r)
+    obj = record2json(r, "烟雾")
 
     return JsonResponse({"status": 200, "obj": obj})
 
@@ -87,7 +86,6 @@ def model_handle(input_pic, smoke_pic, pos1, pos2):
 
 def joint(request: HttpRequest):
     token: str = request.POST.get("token", "")
-    print(token)
     ua = verifyToken(token)
 
     if not ua:
@@ -112,13 +110,12 @@ def joint(request: HttpRequest):
     save_path = MEDIA_ROOT.joinpath(res_url)
     shutil.copyfile(input_pic_path, save_path)
 
-    r = Record()
+    r = JointRecord()
     r.user = ua
     r.name = res_name
-    r.pic_type = "图片"
     r.url = "/" + res_url
     r.save()
-    obj = record2json(r)
+    obj = record2json(r, "图片")
     return JsonResponse({"status": 200, "obj": obj})
 
 
@@ -135,8 +132,8 @@ def generate_history(request: HttpRequest):
     if not ua:
         return JsonResponse({"status": 403, "message": "用户未登录"})
     res = []
-    for r in Record.objects.filter(user=ua, pic_type="烟雾"):
-        res.append(record2json(r))
+    for r in SmokeRecord.objects.filter(user=ua):
+        res.append(record2json(r, "烟雾"))
 
     return JsonResponse({"status": 200, "records": res})
 
@@ -155,8 +152,8 @@ def joint_history(request: HttpRequest):
         return JsonResponse({"status": 403, "message": "用户未登录"})
 
     res = []
-    for r in Record.objects.filter(user=ua, pic_type="图片"):
-        res.append(record2json(r))
+    for r in JointRecord.objects.filter(user=ua):
+        res.append(record2json(r, "图片"))
 
     return JsonResponse({"status": 200, "records": res})
 
@@ -186,7 +183,7 @@ def update(request: HttpRequest):
         "url":"url",
         "type":"烟雾",
         "name":"name",
-        "visiable":true,
+        "visible":true,
     }
     """
     data = selectData(request)
@@ -197,15 +194,17 @@ def update(request: HttpRequest):
         return JsonResponse({"status": 403, "message": "用户未登录"})
 
     pic_type = data.get("type", 0)
-    visiable = data.get("visiable", None)
+    visible = data.get("visible", None)
     name = data.get("name", "")
     url = data.get("url", "")
-
-    a = Record.objects.filter(user=ua, pic_type=pic_type, url=url)
+    if pic_type == "烟雾":
+        a = SmokeRecord.objects.filter(user=ua, url=url)
+    else:
+        a = JointRecord.objects.filter(user=ua, url=url)
 
     if len(a) > 0:
-        if visiable:
-            a[0].visiable = visiable
+        if visible:
+            a[0].visible = visible
         if name:
             a[0].name = name
         a[0].save()
@@ -232,9 +231,10 @@ def delete(request: HttpRequest):
 
     url = data.get("url", "")
     pic_type = data.get("type", "")
-
-    a = Record.objects.filter(user=ua, pic_type=pic_type, url=url)
-
+    if pic_type == "烟雾":
+        a = SmokeRecord.objects.filter(user=ua, url=url)
+    else:
+        a = JointRecord.objects.filter(user=ua, url=url)
     if len(a) > 0:
         for i in a:
             i.delete()
@@ -248,17 +248,21 @@ def get(request: HttpRequest):
     """
     {
         "token":"123",
+        "type":"烟雾",
         "id":1
     }
     """
     data = selectData(request)
 
     _id = data.get("id", None)
+    pic_type = data.get("type", "")
 
-    if not _id:
+    if not all([_id, pic_type]):
         return JsonResponse({"status": 402, "message": "参数错误"})
-
-    a = Record.objects.filter(id=_id)
+    if pic_type == "烟雾":
+        a = SmokeRecord.objects.filter(id=_id)
+    else:
+        a = JointRecord.objects.filter(id=_id)
     if len(a) > 0:
         r = a[0]
         user_info = {
@@ -267,9 +271,9 @@ def get(request: HttpRequest):
             "status": r.user.status,
             "avatar": r.user.avatar.url,
         }
-        if r.visiable:
+        if r.visible:
             return JsonResponse(
-                {"status": 200, "record": record2json(r), "user": user_info}
+                {"status": 200, "record": record2json(r, pic_type), "user": user_info}
             )
         else:
             token: str = data.get("token", "")
@@ -277,7 +281,11 @@ def get(request: HttpRequest):
 
             if r.user == ua:
                 return JsonResponse(
-                    {"status": 200, "record": record2json(r), "user": user_info}
+                    {
+                        "status": 200,
+                        "record": record2json(r, pic_type),
+                        "user": user_info,
+                    }
                 )
             else:
                 return JsonResponse({"status": 403, "message": "用户未登录或无权限"})

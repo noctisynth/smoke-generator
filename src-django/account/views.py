@@ -17,8 +17,6 @@ def add(request: HttpRequest):
     email: str = request.POST.get("email", "")
     stauts: str = request.POST.get("status", "")
     avatar = request.FILES.get("avatar", None)
-    print(avatar)
-    print(request.FILES)
 
     if not all([username, password, phone, email, stauts, avatar]):
         return JsonResponse({"status": 402, "message": "参数错误"})

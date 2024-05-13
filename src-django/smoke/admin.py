@@ -1,11 +1,16 @@
 from django.contrib import admin
-from .models import Record
+from .models import SmokeRecord, JointRecord
 
 # Register your models here.
 
 
-class RecordAdmin(admin.ModelAdmin):
-    list_display = ("name", "user", "pic_type", "date")
+class SmokeRecordAdmin(admin.ModelAdmin):
+    list_display = ("name", "user", "date")
 
 
-admin.site.register(Record, RecordAdmin)
+class JointRecordAdmin(admin.ModelAdmin):
+    list_display = ("name", "user", "date")
+
+
+admin.site.register(JointRecord, JointRecordAdmin)
+admin.site.register(SmokeRecord, SmokeRecordAdmin)
