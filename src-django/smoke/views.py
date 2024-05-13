@@ -1,3 +1,4 @@
+from pydoc import visiblename
 from smokegenerator.settings import MEDIA_ROOT
 from django.http import HttpRequest, JsonResponse
 import datetime
@@ -291,3 +292,25 @@ def get(request: HttpRequest):
                 return JsonResponse({"status": 403, "message": "用户未登录或无权限"})
     else:
         return JsonResponse({"status": 404, "message": "记录未找到"})
+
+
+def get_public(request: HttpRequest):
+    """
+    {
+        "type":"烟雾"
+    }
+    """
+    data = selectData(request)
+    pic_type = data.get("type", "")
+
+    if not pic_type:
+        return JsonResponse({"status": 400, "message": "类型错误"})
+
+    if pic_type == "烟雾":
+        a = SmokeRecord.objects.filter(visible=True)
+    else:
+        a = JointRecord.objects.filter(visible=True)
+
+    c = [record2json(r, pic_type) for r in a]
+
+    return JsonResponse({"status": 200, "records": c})
