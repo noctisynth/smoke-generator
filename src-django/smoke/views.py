@@ -1,8 +1,5 @@
-from pydoc import visiblename
-
-from django.shortcuts import render
 from smokegenerator.settings import MEDIA_ROOT
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, JsonResponse
 import datetime
 from util import verifyToken, selectData
 from .models import SmokeRecord, JointRecord
@@ -183,7 +180,7 @@ def update(request: HttpRequest):
     """
     {
         "token":"123",
-        "url":"url",
+        "id":1,
         "type":"烟雾",
         "name":"name",
         "visible":true,
@@ -199,11 +196,11 @@ def update(request: HttpRequest):
     pic_type = data.get("type", 0)
     visible = data.get("visible", None)
     name = data.get("name", "")
-    url = data.get("url", "")
+    _id = data.get("id", "")
     if pic_type == "烟雾":
-        a = SmokeRecord.objects.filter(user=ua, url=url)
+        a = SmokeRecord.objects.filter(user=ua, id=_id)
     else:
-        a = JointRecord.objects.filter(user=ua, url=url)
+        a = JointRecord.objects.filter(user=ua, id=_id)
 
     if len(a) > 0:
         if visible:
@@ -316,3 +313,45 @@ def get_public(request: HttpRequest):
     c = [record2json(r, pic_type) for r in a]
 
     return JsonResponse({"status": 200, "records": c})
+
+
+def explore_add(request: HttpRequest):
+    """
+    {
+        "token":"123",
+        "type":"烟雾",
+        "id":1
+    }
+    """
+    data = selectData(request)
+    token: str = data.get("token", "")
+    ua = verifyToken(token)
+
+    if not ua:
+        return JsonResponse({"status": 403, "message": "用户未登录"})
+
+    pic_type = data.get("type", "")
+    _id = data.get("id", None)
+
+    if not all([pic_type, _id]):
+        return JsonResponse({"status": 400, "message": "参数错误"})
+
+    if pic_type == "烟雾":
+        a = SmokeRecord.objects.filter(id=_id)
+        r = SmokeRecord()
+    else:
+        a = JointRecord.objects.filter(id=_id)
+        r = JointRecord()
+
+    if len(a) == 0:
+        return JsonResponse({"status": 404, "message": "记录不存在"})
+
+    r.name = a[0].name
+    r.user = ua
+    r.date = a[0].date
+    r.url = a[0].url
+    r.save()
+
+    return JsonResponse(
+        {"status": 200, "message": "添加成功", "record": record2json(r, pic_type)}
+    )
