@@ -72,14 +72,14 @@ async function jointSmoke() {
         if (res.data.status === 200) {
             const obj = res.data.obj;
             generatedSmoke.value = obj.url;
-            toast.add({ severity: 'success', summary: '烟雾生成成功！', detail: res.data.message, life: 3000 });
-            router.push('/dashboard/joint/' + obj.id);
+            toast.add({ severity: 'success', summary: '烟雾合成成功！', detail: res.data.message, life: 3000 });
+            router.push('/dashboard/explore/synthesis/' + obj.id);
         }
         else
-            toast.add({ severity: 'error', summary: '烟雾生成失败！', detail: res.data.message, life: 3000 });
+            toast.add({ severity: 'error', summary: '烟雾合成失败！', detail: res.data.message, life: 3000 });
         inProgress.value = false;
     }).catch((err) => {
-        toast.add({ severity: 'error', summary: '烟雾生成失败！', detail: err.message, life: 3000 });
+        toast.add({ severity: 'error', summary: '烟雾合成失败！', detail: err.message, life: 3000 });
     })
 }
 
@@ -150,7 +150,7 @@ onMounted(async () => {
                                         </Carousel>
                                     </div>
                                     <div class="flex pt-4 justify-end">
-                                        <Button label="选择样式" icon="pi pi-arrow-right" iconPos="right"
+                                        <Button label="上传图片" icon="pi pi-arrow-right" iconPos="right"
                                             @click="active = 1"></Button>
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@ onMounted(async () => {
                                             auto />
                                     </div>
                                     <div class="flex pt-4 justify-between">
-                                        <Button label="选择类型" icon="pi pi-arrow-left" severity="secondary"
+                                        <Button label="选择烟雾" icon="pi pi-arrow-left" severity="secondary"
                                             @click="active = 0"></Button>
                                         <Button label="合成图片" icon="pi pi-arrow-right" iconPos="right"
                                             @click="jointSmoke"></Button>

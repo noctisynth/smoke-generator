@@ -41,7 +41,7 @@ function download() {
 }
 
 onMounted(async () => {
-    axios.post('/smoke/get', { token: tokenStore.token, id: id }).then(res => {
+    axios.post('/smoke/get', { token: tokenStore.token, id: id, type: '烟雾' }).then(res => {
         if (res.data.status === 200) {
             smoke.value = res.data.record;
             user.value = res.data.user;
