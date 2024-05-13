@@ -54,6 +54,10 @@ class SmokeRecord(models.Model):
     def username(self):
         return self.user.username
 
+    def save(self):
+        on_update()
+        super().save()
+
     username.short_description = "用户名"
     image.short_description = "图片"
 
@@ -71,6 +75,10 @@ class JointRecord(models.Model):
     date = models.DateField(verbose_name="日期", default=datetime.date.today)
     url = models.CharField(max_length=39 * 7, verbose_name="图片地址", unique=True)
     visible = models.BooleanField(default=False, verbose_name="可见性")
+
+    def save(self):
+        on_update()
+        super().save()
 
     def image(self):
         return format_html(
@@ -122,3 +130,35 @@ class JointRecord(models.Model):
 
         def __str__(self) -> str:
             return self.name  # type: ignore
+
+
+def on_update():
+    from public.models import PublicJoint, PublicSmoke
+
+    public_smokes = SmokeRecord.objects.filter(visible=True)
+    private_smokes = SmokeRecord.objects.filter(visible=False)
+
+    for ps in private_smokes:
+        for i in PublicSmoke.objects.filter(record=ps):
+            i.delete()
+
+    for ps in public_smokes:
+        a = PublicSmoke.objects.filter(record=ps)
+        if len(a) == 0:
+            _p = PublicSmoke()
+            _p.record = ps
+            _p.save()
+
+    public_joints = JointRecord.objects.filter(visible=True)
+    private_joints = JointRecord.objects.filter(visible=False)
+
+    for ps in private_joints:
+        for i in PublicJoint.objects.filter(record=ps):
+            i.delete()
+
+    for ps in public_joints:
+        a = PublicJoint.objects.filter(record=ps)
+        if len(a) == 0:
+            _p = PublicJoint()
+            _p.record = ps
+            _p.save()
