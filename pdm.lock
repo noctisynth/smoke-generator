@@ -5,7 +5,23 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:13ad779e4b2473cea3641ca4e22d3bf2e9a4e1aba9be7a8ef59538865fb9fd88"
+content_hash = "sha256:9deac62822daeef3d5dfc5f7ee90c477ceb6c33f3d46b799ef4fbcba24b69d06"
+
+[[package]]
+name = "apscheduler"
+version = "3.10.4"
+requires_python = ">=3.6"
+summary = "In-process task scheduler with Cron-like capabilities"
+groups = ["default"]
+dependencies = [
+    "pytz",
+    "six>=1.4.0",
+    "tzlocal!=3.*,>=2.0",
+]
+files = [
+    {file = "APScheduler-3.10.4-py3-none-any.whl", hash = "sha256:fb91e8a768632a4756a585f79ec834e0e27aad5860bac7eaa523d9ccefd87661"},
+    {file = "APScheduler-3.10.4.tar.gz", hash = "sha256:e6df071b27d9be898e486bc7940a7be50b4af2e9da7c08f0744a96d4bd4cef4a"},
+]
 
 [[package]]
 name = "asgiref"
@@ -35,6 +51,20 @@ dependencies = [
 files = [
     {file = "Django-5.0.4-py3-none-any.whl", hash = "sha256:916423499d75d62da7aa038d19aef23d23498d8df229775eb0a6309ee1013775"},
     {file = "Django-5.0.4.tar.gz", hash = "sha256:4bd01a8c830bb77a8a3b0e7d8b25b887e536ad17a81ba2dce5476135c73312bd"},
+]
+
+[[package]]
+name = "django-apscheduler"
+version = "0.6.2"
+summary = "APScheduler for Django"
+groups = ["default"]
+dependencies = [
+    "apscheduler<4.0,>=3.2",
+    "django>=3.2",
+]
+files = [
+    {file = "django-apscheduler-0.6.2.tar.gz", hash = "sha256:60ced2c07b531b0477076dfef2d6de4790a983a4bbd75fae5e387ac360e9c8fd"},
+    {file = "django_apscheduler-0.6.2-py3-none-any.whl", hash = "sha256:d30a05be98e01c12aa50d0a7afd8d0fd529c874d1c75af20891b6417d2f36475"},
 ]
 
 [[package]]
@@ -122,6 +152,27 @@ files = [
 ]
 
 [[package]]
+name = "pytz"
+version = "2024.1"
+summary = "World timezone definitions, modern and historical"
+groups = ["default"]
+files = [
+    {file = "pytz-2024.1-py2.py3-none-any.whl", hash = "sha256:328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319"},
+    {file = "pytz-2024.1.tar.gz", hash = "sha256:2a29735ea9c18baf14b448846bde5a48030ed267578472d8955cd0e7443a9812"},
+]
+
+[[package]]
+name = "six"
+version = "1.16.0"
+requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+summary = "Python 2 and 3 compatibility utilities"
+groups = ["default"]
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+
+[[package]]
 name = "sqlparse"
 version = "0.5.0"
 requires_python = ">=3.8"
@@ -150,8 +201,22 @@ version = "2024.1"
 requires_python = ">=2"
 summary = "Provider of IANA time zone data"
 groups = ["default"]
-marker = "sys_platform == \"win32\""
+marker = "sys_platform == \"win32\" or platform_system == \"Windows\""
 files = [
     {file = "tzdata-2024.1-py2.py3-none-any.whl", hash = "sha256:9068bc196136463f5245e51efda838afa15aaeca9903f49050dfa2679db4d252"},
     {file = "tzdata-2024.1.tar.gz", hash = "sha256:2674120f8d891909751c38abcdfd386ac0a5a1127954fbc332af6b5ceae07efd"},
+]
+
+[[package]]
+name = "tzlocal"
+version = "5.2"
+requires_python = ">=3.8"
+summary = "tzinfo object for the local timezone"
+groups = ["default"]
+dependencies = [
+    "tzdata; platform_system == \"Windows\"",
+]
+files = [
+    {file = "tzlocal-5.2-py3-none-any.whl", hash = "sha256:49816ef2fe65ea8ac19d19aa7a1ae0551c834303d5014c6d5a62e4cbda8047b8"},
+    {file = "tzlocal-5.2.tar.gz", hash = "sha256:8d399205578f1a9342816409cc1e46a93ebd5755e39ea2d85334bea911bf0e6e"},
 ]

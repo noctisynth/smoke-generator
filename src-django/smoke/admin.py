@@ -5,11 +5,11 @@ from .models import SmokeRecord, JointRecord
 
 
 class SmokeRecordAdmin(admin.ModelAdmin):
-    list_display = ("name", "image", "username", "date")
+    list_display = ("name", "image", "visible", "username", "date")
 
 
 class JointRecordAdmin(admin.ModelAdmin):
-    list_display = ("name", "image", "username", "date")
+    list_display = ("name", "image", "visible", "username", "date")
 
 
 admin.site.register(SmokeRecord, SmokeRecordAdmin)

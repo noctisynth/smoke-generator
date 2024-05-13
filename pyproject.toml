@@ -10,6 +10,7 @@ dependencies = [
     "Pillow>=10.3.0",
     "django-simpleui>=2024.4.1",
     "django-cors-headers>=4.3.1",
+    "django-apscheduler>=0.6.2",
 ]
 requires-python = ">=3.10"
 readme = "README.md"

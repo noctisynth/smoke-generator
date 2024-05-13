@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "account",
     "billboard",
     "smoke",
+    "public",
+    "django_apscheduler",
 ]
 
 MIDDLEWARE = [
@@ -63,7 +65,6 @@ TEMPLATES = [
         "DIRS": [
             BASE_DIR,
             BASE_DIR.parent.joinpath("dist"),
-            BASE_DIR.joinpath("template"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -138,3 +139,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = ["*", "Content-Type"]
+
+SIMPLEUI_CONFIG = {
+    "system_keep": True,
+    "menu_display": ["公告牌", "结果管理", "公开管理", "用户管理", "认证和授权"],
+}

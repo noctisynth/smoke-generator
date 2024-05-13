@@ -22,6 +22,10 @@ from django.urls import path, include, re_path
 from django.views.static import serve
 from django.conf import settings
 
+admin.site.site_header = "烟雾生成拼接系统"
+admin.site.site_title = "烟雾生成拼接系统"
+admin.site.index_title = "烟雾生成拼接系统"
+
 
 def for_admin(_):
     return HttpResponseRedirect("/admin/")
