@@ -1,5 +1,6 @@
 from django.urls import path
-from . import views
+from smoke import views
+
 
 urlpatterns = [
     path("generate", views.generate),
@@ -12,4 +13,5 @@ urlpatterns = [
     path("update", views.update),
     path("get", views.get),
     path("get_public", views.get_public),
+    path("explore_add", views.explore_add),
 ]
