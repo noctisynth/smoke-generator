@@ -63,8 +63,8 @@ onMounted(async () => {
                 <template #content>
                     <div v-if="records.length > 0" class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-4">
                         <div v-for="record in records" :key="record.id" class="py-3 flex flex-col items-center">
-                            <a class="rounded-lg shadow-sm shadow-indigo-100 grid">
-                                <Image :src="record.url" class="h-56 w-full object-cover" preview></Image>
+                            <a class="max-w-full rounded-lg shadow-sm shadow-indigo-100 grid">
+                                <Image :src="record.url" imageClass="max-w-full" class="h-56 w-full max-w-full object-cover" preview></Image>
                                 <div class="p-2 mt-2">
                                     <div @click="router.push('/dashboard/explore/synthesis/' + record.id)"
                                         class="cursor-pointer flex p-2 flex-col items-start justify-center">
