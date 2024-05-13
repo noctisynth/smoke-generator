@@ -35,14 +35,14 @@ const filters = ref({
 const onRowEditSave = (event: any) => {
     let { newData, index } = event;
 
-    let url = history_data.value[index].url;
+    let id = history_data.value[index].id;
     let type = history_data.value[index].type;
     let name = newData.name;
     let visible = newData.visible;
     axios
         .post("/smoke/update", {
             token: useToken.token,
-            url: url,
+            id: id,
             type: type,
             name: name,
             visible: visible,

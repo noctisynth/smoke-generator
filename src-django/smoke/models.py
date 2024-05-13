@@ -10,7 +10,7 @@ class SmokeRecord(models.Model):
     name = models.CharField(max_length=39 * 3, verbose_name="名称")
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, verbose_name="用户")
     date = models.DateField(verbose_name="日期", default=datetime.date.today)
-    url = models.CharField(max_length=39 * 7, verbose_name="图片地址", unique=True)
+    url = models.CharField(max_length=39 * 7, verbose_name="图片地址")
     visible = models.BooleanField(default=False, verbose_name="可见性")
 
     def image(self):
@@ -73,7 +73,7 @@ class JointRecord(models.Model):
     name = models.CharField(max_length=39 * 3, verbose_name="名称")
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE, verbose_name="用户")
     date = models.DateField(verbose_name="日期", default=datetime.date.today)
-    url = models.CharField(max_length=39 * 7, verbose_name="图片地址", unique=True)
+    url = models.CharField(max_length=39 * 7, verbose_name="图片地址")
     visible = models.BooleanField(default=False, verbose_name="可见性")
 
     def save(self):
