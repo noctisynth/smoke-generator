@@ -17,6 +17,11 @@ if (!tokenStore.isLoggedIn()) {
 
 onMounted(() => {
     axios.post('/account/profile', { token: tokenStore.token }).then((res) => {
+        if (res.data.status === 403) {
+            toast.add({ severity: 'error', summary: '错误', detail: '登录已过期，请重新登录！', life: 3000 });
+            router.push('/login');
+            tokenStore.removeToken();
+        }
         userStore.setUserInfo(res.data);
     }).catch(() => {
         toast.add({ severity: 'error', summary: '错误', detail: '服务器错误！', life: 3000 });
@@ -40,9 +45,9 @@ onMounted(() => {
                         <span class="text-lg font-bold">{{ userStore.username }} 的账户</span>
                         <h2 class="text-sm font-bold m-0 text-coolGray-600">此处列出了一些功能快捷入口</h2>
                         <div class="grid grid-cols-2 gap-4">
-                            <ColoredCard title="烟雾拼接" href="/dashboard/generate/" tag="拼接" class="w-full h-full">
+                            <ColoredCard title="烟雾生成" href="/dashboard/generate/" tag="生成" class="w-full h-full">
                             </ColoredCard>
-                            <ColoredCard title="烟雾生成" href="/dashboard/joint/" tag="生成" class="w-full h-full">
+                            <ColoredCard title="烟雾拼接" href="/dashboard/joint/" tag="拼接" class="w-full h-full">
                             </ColoredCard>
                             <ColoredCard title="烟雾生成历史" href="/dashboard/generate/history/" tag="生成"
                                 class="w-full h-full">
