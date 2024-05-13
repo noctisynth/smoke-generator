@@ -12,5 +12,5 @@ class JointRecordAdmin(admin.ModelAdmin):
     list_display = ("name", "user", "date")
 
 
-admin.site.register(JointRecord, JointRecordAdmin)
 admin.site.register(SmokeRecord, SmokeRecordAdmin)
+admin.site.register(JointRecord, JointRecordAdmin)

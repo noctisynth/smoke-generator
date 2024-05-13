@@ -1,4 +1,3 @@
-from turtle import mode
 from django.db import models
 from account.models import UserAccount
 import datetime
@@ -15,7 +14,6 @@ class SmokeRecord(models.Model):
     visible = models.BooleanField(default=False, verbose_name="可见性")
 
     class Meta:
-        verbose_name = "拼接结果"
         verbose_name_plural = "烟雾生成结果"
 
         def __str__(self) -> str:
@@ -30,7 +28,6 @@ class JointRecord(models.Model):
     visible = models.BooleanField(default=False, verbose_name="可见性")
 
     class Meta:
-        verbose_name = "拼接结果"
         verbose_name_plural = "拼接结果"
 
         def __str__(self) -> str:
