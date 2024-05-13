@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     "billboard",
     "smoke",
     "public",
-    "django_apscheduler",
 ]
 
 MIDDLEWARE = [
