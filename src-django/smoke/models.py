@@ -54,7 +54,11 @@ class SmokeRecord(models.Model):
     def username(self):
         return self.user.username
 
+    username.short_description = "用户名"
+    image.short_description = "图片"
+
     class Meta:
+        verbose_name = "烟雾生成结果"
         verbose_name_plural = "烟雾生成结果"
 
         def __str__(self) -> str:
@@ -109,7 +113,11 @@ class JointRecord(models.Model):
     def username(self):
         return self.user.username
 
+    username.short_description = "用户名"
+    image.short_description = "图片"
+
     class Meta:
+        verbose_name = "拼接结果"
         verbose_name_plural = "拼接结果"
 
         def __str__(self) -> str:

@@ -55,11 +55,17 @@ class PublicSmoke(models.Model):
     def username(self):
         return self.record.user.username
 
+    name.short_description = "名称"
+    date.short_description = "日期"
+    image.short_description = "图片"
+    username.short_description = "用户名"
+
     def delete(self):
         self.record.delete()
         return super().delete()
 
     class Meta:
+        verbose_name = "公开烟雾"
         verbose_name_plural = "公开烟雾"
 
         def __str__(self) -> str:
@@ -116,11 +122,17 @@ class PublicJoint(models.Model):
     def username(self):
         return self.record.user.username
 
+    name.short_description = "名称"
+    date.short_description = "日期"
+    image.short_description = "图片"
+    username.short_description = "用户名"
+
     def delete(self):
         self.record.delete()
         return super().delete()
 
     class Meta:
+        verbose_name = "公开图片"
         verbose_name_plural = "公开图片"
 
         def __str__(self) -> str:
