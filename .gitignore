@@ -1,3 +1,6 @@
+# Models
+checkpoints/
+
 # Logs
 logs
 *.log

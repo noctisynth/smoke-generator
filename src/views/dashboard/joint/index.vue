@@ -52,20 +52,35 @@ async function jointSmoke() {
     inProgress.value = true;
 
     let cropData: { x: number, y: number, width: number, height: number } = cropper.value.getData();
+    let imageData: any = cropper.value.getImageData();
+
+    const naturalWidth = imageData.naturalWidth;
+    const naturalHeight = imageData.naturalHeight;
+
+    // console.log(cropper.value);
+    console.table(cropData);
+    console.table(cropper.value.getImageData());
+    // console.log(cropper.value.getContainerData());
+    // console.log(cropper.value.getCanvasData());
+    // return;
 
     // 发送生成烟雾请求
     const formData = new FormData();
     formData.append('token', tokenStore.token);
     formData.append('input_pic', uploadedImage.value);
     formData.append('smoke_id', smokes.value[selectedMask.value].id);
-    formData.append('pos1', "(" + cropData.x.toFixed(0).toString() + ", " + cropData.y.toFixed(0).toString() + ")");
+    formData.append(
+        'pos1',
+        "(" + (cropData.x / naturalWidth * 256).toFixed(0).toString() + ", "
+        + (cropData.y / naturalHeight * 256).toFixed(0).toString() + ")"
+    );
     formData.append(
         'pos2',
-        "(" + (cropData.x + cropData.width).toFixed(0).toString() + ", "
-        + (cropData.y + cropData.height).toFixed(0).toString() + ")"
+        "(" + ((cropData.x + cropData.width) / naturalWidth * 256).toFixed(0).toString() + ", "
+        + ((cropData.y + cropData.height) / naturalHeight * 256).toFixed(0).toString() + ")"
     );
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     axios.post('/smoke/joint', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
     }).then((res) => {

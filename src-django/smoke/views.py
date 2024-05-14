@@ -3,12 +3,13 @@ from django.http import HttpRequest, JsonResponse
 import datetime
 from util import verifyToken, selectData
 from .models import SmokeRecord, JointRecord
+from account.models import UserAccount
 import random
 import string
 import shutil
 
 
-def record2json(r: SmokeRecord | JointRecord, pic_type):
+def record2json(r, pic_type):
     return {
         "id": r.id,  # type: ignore
         "name": r.name,
@@ -76,11 +77,21 @@ def generate(request: HttpRequest):
 
     return JsonResponse({"status": 200, "obj": obj})
 
+from pathlib import Path
 
-def model_handle(input_pic, smoke_pic, pos1, pos2):
+def model_handle(input_pic: Path, smoke_pic, pos1, pos2):
+    import subprocess
     # 模型处理得到图片，并保存，返回url
+    smoke_path: Path = MEDIA_ROOT.joinpath(smoke_pic[1:])
     name = get_name()
-
+    print("Running: ", f'F:/anaconda/envs/my_torch/python.exe ../cycle_pix2pix/entrance.py '
+        f'--image ../SmokeGenerator/dist/images/{input_pic.name} --smoke {str(smoke_path)} '
+        f'--pos1 "{pos1}" --pos2 "{pos2}" --output ../SmokeGenerator/dist/res/{name}')
+    subprocess.run(
+        f'F:/anaconda/envs/my_torch/python.exe ../cycle_pix2pix/entrance.py '
+        f'--image ../SmokeGenerator/dist/images/{input_pic.name} --smoke {str(smoke_path)} '
+        f'--pos1 "{pos1}" --pos2 "{pos2}" --output ../SmokeGenerator/dist/res/{name}'
+    )
     return name
 
 
@@ -93,9 +104,8 @@ def joint(request: HttpRequest):
 
     input_pic = request.FILES.get("input_pic")
     smoke_id = request.POST.get("smoke_id")
-    pos1 = eval(request.POST.get("pos1"))  # type: ignore
-    pos2 = eval(request.POST.get("pos2"))  # type: ignore
-    # 已为你 转为tuple
+    pos1 = request.POST.get("pos1")  # type: ignore
+    pos2 = request.POST.get("pos2")  # type: ignore
 
     if not all([input_pic, smoke_id, pos1, pos2]):
         return JsonResponse({"status": 402, "message": "参数错误"})
@@ -105,10 +115,13 @@ def joint(request: HttpRequest):
         for c in input_pic.chunks():  # type: ignore
             f.write(c)
 
-    res_name = model_handle(input_pic.name, smoke_id, pos1, pos2)  # type: ignore
+    smoke_record: SmokeRecord = SmokeRecord.objects.get(id=smoke_id, user=ua)
+    smoke_path = smoke_record.url
+    print(smoke_path)
+    res_name = model_handle(input_pic_path, smoke_path, pos1, pos2)  # type: ignore
     res_url = "res/" + res_name
     save_path = MEDIA_ROOT.joinpath(res_url)
-    shutil.copyfile(input_pic_path, save_path)
+    # shutil.copyfile(input_pic_path, save_path)
 
     r = JointRecord()
     r.user = ua
