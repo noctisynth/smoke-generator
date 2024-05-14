@@ -1,3 +1,4 @@
+from tkinter import NO
 from smokegenerator.settings import MEDIA_ROOT
 from django.http import HttpRequest, JsonResponse
 import datetime
@@ -203,7 +204,7 @@ def update(request: HttpRequest):
         a = JointRecord.objects.filter(user=ua, id=_id)
 
     if len(a) > 0:
-        if visible:
+        if visible is not None:
             a[0].visible = visible
         if name:
             a[0].name = name
